@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pressure Unit Converter</title>
+  <style>
+    :root{
+      --bg: #0b1020;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.08);
+      --stroke: rgba(255,255,255,.14);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --muted2: rgba(255,255,255,.55);
+      --accent: #4da3ff;
+      --accent2:#66ffc7;
+      --danger:#ff6b6b;
+      --ok:#74f28a;
+      --shadow: 0 24px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+      --radius2: 14px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(77,163,255,.18), transparent 60%),
+        radial-gradient(900px 700px at 85% 30%, rgba(102,255,199,.12), transparent 55%),
+        radial-gradient(1000px 800px at 55% 95%, rgba(160,120,255,.10), transparent 60%),
+        linear-gradient(180deg, #070a14 0%, #0b1020 50%, #060912 100%);
+      display:flex;
+      align-items:stretch;
+    }
+
+    .wrap{
+      width:min(1100px, 100%);
+      margin: 0 auto;
+      padding: 28px 18px 40px;
+    }
+
+    header{
+      display:flex;
+      gap: 14px;
+      align-items:flex-end;
+      justify-content:space-between;
+      padding: 6px 6px 16px;
+    }
+    .title{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+    .title h1{
+      margin:0;
+      font-size: clamp(22px, 2.4vw, 30px);
+      letter-spacing: .2px;
+      line-height:1.15;
+    }
+    .title p{
+      margin:0;
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 70ch;
+    }
+
+    .pill{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding: 10px 12px;
+      background: var(--panel);
+      border: 1px solid var(--stroke);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .pill .dot{
+      width:10px;height:10px;border-radius:50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 5px rgba(77,163,255,.10);
+    }
+    .pill .small{
+      font-size: 12px;
+      color: var(--muted);
+      white-space:nowrap;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 16px;
+      align-items:start;
+    }
+    @media (max-width: 920px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,.05) 100%);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .card .cardHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    .card .cardHead h2{
+      margin:0;
+      font-size: 15px;
+      letter-spacing:.2px;
+      color: rgba(255,255,255,.88);
+    }
+    .card .cardHead .sub{
+      margin-left:auto;
+      font-size: 12px;
+      color: var(--muted2);
+    }
+
+    .card .cardBody{
+      padding: 14px 16px 16px;
+    }
+
+    .form{
+      display:grid;
+      gap: 12px;
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns: 1.2fr 1fr 48px 1fr;
+      gap: 10px;
+      align-items:end;
+    }
+    @media (max-width: 680px){
+      .row{
+        grid-template-columns: 1fr;
+        align-items:stretch;
+      }
+      .swapWrap{ display:none; }
+    }
+
+    label{
+      display:block;
+      font-size: 12px;
+      color: var(--muted2);
+      margin: 0 0 6px;
+      letter-spacing:.2px;
+    }
+
+    input[type="text"], select{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      outline: none;
+      transition: border-color .15s ease, box-shadow .15s ease, transform .05s ease;
+    }
+    input[type="text"]{
+      font-family: var(--mono);
+      letter-spacing:.1px;
+    }
+    input[type="text"]:focus, select:focus{
+      border-color: rgba(77,163,255,.65);
+      box-shadow: 0 0 0 4px rgba(77,163,255,.18);
+    }
+    select{
+      appearance:none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, rgba(255,255,255,.65) 50%),
+        linear-gradient(135deg, rgba(255,255,255,.65) 50%, transparent 50%),
+        linear-gradient(to right, rgba(255,255,255,.0), rgba(255,255,255,.0));
+      background-position:
+        calc(100% - 18px) calc(50% - 3px),
+        calc(100% - 12px) calc(50% - 3px),
+        0 0;
+      background-size: 6px 6px, 6px 6px, 100% 100%;
+      background-repeat:no-repeat;
+      padding-right: 36px;
+    }
+
+    .swapWrap{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding-bottom: 2px;
+    }
+
+    .btn{
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.20);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 10px 12px;
+      cursor:pointer;
+      transition: transform .06s ease, border-color .15s ease, background .15s ease;
+      user-select:none;
+      font-weight: 600;
+      letter-spacing:.2px;
+    }
+    .btn:hover{
+      border-color: rgba(77,163,255,.55);
+      background: rgba(77,163,255,.10);
+    }
+    .btn:active{
+      transform: translateY(1px);
+    }
+    .btn.primary{
+      border-color: rgba(77,163,255,.65);
+      background: linear-gradient(135deg, rgba(77,163,255,.25), rgba(102,255,199,.18));
+    }
+    .btn.ghost{
+      background: transparent;
+    }
+
+    .btnIcon{
+      width: 44px;
+      height: 44px;
+      display:grid;
+      place-items:center;
+      padding: 0;
+      border-radius: 14px;
+    }
+
+    .actions{
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      padding-top: 6px;
+    }
+
+    .hint{
+      font-size: 12px;
+      color: var(--muted2);
+      line-height:1.35;
+    }
+
+    .resultBox{
+      display:grid;
+      gap: 10px;
+      margin-top: 12px;
+      padding: 12px;
+      background: rgba(0,0,0,.18);
+      border: 1px dashed rgba(255,255,255,.18);
+      border-radius: 16px;
+    }
+    .resultTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 10px;
+      flex-wrap:wrap;
+    }
+    .big{
+      font-family: var(--mono);
+      font-size: clamp(20px, 3.2vw, 28px);
+      line-height:1.1;
+      letter-spacing: .3px;
+      word-break: break-word;
+    }
+    .smallMono{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      word-break: break-word;
+    }
+
+    .status{
+      font-size: 12px;
+      color: var(--muted2);
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.18);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .badge.ok{ border-color: rgba(116,242,138,.35); color: rgba(116,242,138,.92); }
+    .badge.bad{ border-color: rgba(255,107,107,.35); color: rgba(255,107,107,.92); }
+
+    .table{
+      width:100%;
+      border-collapse: collapse;
+      border-spacing: 0;
+      overflow:hidden;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .table th, .table td{
+      text-align:left;
+      padding: 10px 10px;
+      font-size: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      vertical-align:top;
+    }
+    .table th{
+      color: rgba(255,255,255,.82);
+      background: rgba(0,0,0,.16);
+      font-weight:700;
+    }
+    .table td{
+      color: var(--muted);
+      font-family: var(--mono);
+    }
+    .table tr:last-child td{ border-bottom:none; }
+    .noteCell{
+      font-family: var(--sans) !important;
+      color: var(--muted2) !important;
+      line-height:1.35;
+    }
+
+    .footerNote{
+      margin-top: 12px;
+      color: var(--muted2);
+      font-size: 12px;
+      line-height:1.35;
+    }
+
+    .srOnly{
+      position:absolute;
+      width:1px;height:1px;
+      padding:0;margin:-1px;
+      overflow:hidden;clip:rect(0,0,0,0);
+      white-space:nowrap;border:0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <h1>Pressure Converter</h1>
+        <p>Convert between the pressure units from your chart. Type any value, pick <b>From</b> and <b>To</b>, and the result updates instantly.</p>
+      </div>
+      <div class="pill" aria-label="Converter status">
+        <span class="dot" aria-hidden="true"></span>
+        <div class="small">Base unit: <span style="color:rgba(255,255,255,.88);font-family:var(--mono)">Pa</span></div>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- Converter -->
+      <section class="card" aria-label="Pressure conversion calculator">
+        <div class="cardHead">
+          <h2>Calculator</h2>
+          <div class="sub">Supports decimals, commas, and scientific notation (e.g., 1.23e5)</div>
+        </div>
+
+        <div class="cardBody">
+          <div class="form">
+            <div class="row">
+              <div>
+                <label for="valueInput">Value</label>
+                <input id="valueInput" type="text" inputmode="decimal" autocomplete="off"
+                       placeholder="e.g., 1.433 or 101325 or 1.0e-3" aria-label="Input pressure value" />
+              </div>
+
+              <div>
+                <label for="fromUnit">From</label>
+                <select id="fromUnit" aria-label="Convert from unit"></select>
+              </div>
+
+              <div class="swapWrap" aria-hidden="false">
+                <button id="swapBtn" class="btn btnIcon" type="button" aria-label="Swap from and to units" title="Swap">
+                  ⇄
+                </button>
+              </div>
+
+              <div>
+                <label for="toUnit">To</label>
+                <select id="toUnit" aria-label="Convert to unit"></select>
+              </div>
+            </div>
+
+            <div class="actions">
+              <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                <button id="copyBtn" class="btn primary" type="button">Copy result</button>
+                <button id="clearBtn" class="btn ghost" type="button">Reset</button>
+              </div>
+              <div class="hint">
+                Tip: click the result to copy it too.
+              </div>
+            </div>
+
+            <div class="resultBox" role="region" aria-label="Conversion result">
+              <div class="resultTop">
+                <div>
+                  <div id="resultBig" class="big">—</div>
+                  <div id="resultSmall" class="smallMono">Enter a value to convert.</div>
+                </div>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                  <span id="validBadge" class="badge">Waiting…</span>
+                  <span id="sigBadge" class="badge" title="Formatting mode">Smart format</span>
+                </div>
+              </div>
+
+              <div class="status" id="statusLine">
+                <span aria-hidden="true">•</span>
+                <span id="statusText">No value entered.</span>
+              </div>
+            </div>
+
+            <div class="footerNote">
+              <b>How it works:</b> everything converts through pascals (Pa) using the “Relationship to pascals” numbers from your chart.
+              (So the calculator stays consistent and accurate across all unit pairs.)
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reference -->
+      <aside class="card" aria-label="Reference table">
+        <div class="cardHead">
+          <h2>Reference (from your chart)</h2>
+          <div class="sub">Factors are exact as entered</div>
+        </div>
+        <div class="cardBody">
+          <table class="table" aria-label="Unit conversion factors to pascals">
+            <thead>
+              <tr>
+                <th style="width:34%;">Unit</th>
+                <th style="width:28%;">To Pa (multiply by)</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody id="refBody"></tbody>
+          </table>
+          <div class="footerNote">
+            <span style="color:rgba(255,255,255,.85);">Note:</span> The chart also lists relationships to atmospheres, but converting via Pa automatically reproduces those relationships.
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    // --- Unit map: "toPa" means: (value in this unit) * toPa = value in pascals.
+    // These are taken directly from the image chart.
+    const UNITS = [
+      {
+        id: "Pa",
+        name: "pascal (Pa)",
+        toPa: 1,
+        notes: "SI unit for pressure. 1 Pa = 1 N/m²."
+      },
+      {
+        id: "kPa",
+        name: "kilopascal (kPa)",
+        toPa: 1000,
+        notes: "1 kPa = 1000 Pa."
+      },
+      {
+        id: "psi",
+        name: "pounds per square inch (psi)",
+        toPa: 6894.8,
+        notes: "Common in US engineering/tires."
+      },
+      {
+        id: "atm",
+        name: "atmosphere (atm)",
+        toPa: 101325,
+        notes: "Approximate average air pressure at sea level."
+      },
+      {
+        id: "bar",
+        name: "bar (bar or b)",
+        toPa: 100000,
+        notes: "Commonly used in meteorology."
+      },
+      {
+        id: "mbar",
+        name: "millibar (mbar or mb)",
+        toPa: 100,
+        notes: "1 mbar = 100 Pa."
+      },
+      {
+        id: "inHg",
+        name: "inches of mercury (inHg)",
+        toPa: 3386.4,
+        notes: "Commonly used in aviation."
+      },
+      {
+        id: "mmHg",
+        name: "millimeters of mercury (mmHg)",
+        toPa: 133.32,
+        notes: "Also close to torr."
+      },
+      {
+        id: "torr",
+        name: "torr (torr)",
+        toPa: 133.32,
+        notes: "Very close to 1 mmHg (difference is tiny)."
+      }
+    ];
+
+    const unitById = Object.fromEntries(UNITS.map(u => [u.id, u]));
+
+    // --- DOM
+    const valueInput = document.getElementById("valueInput");
+    const fromUnitSel = document.getElementById("fromUnit");
+    const toUnitSel   = document.getElementById("toUnit");
+    const swapBtn     = document.getElementById("swapBtn");
+    const copyBtn     = document.getElementById("copyBtn");
+    const clearBtn    = document.getElementById("clearBtn");
+
+    const resultBig   = document.getElementById("resultBig");
+    const resultSmall = document.getElementById("resultSmall");
+    const statusText  = document.getElementById("statusText");
+    const validBadge  = document.getElementById("validBadge");
+
+    const refBody     = document.getElementById("refBody");
+
+    // --- Helpers
+    function fillSelect(selectEl){
+      selectEl.innerHTML = "";
+      for (const u of UNITS){
+        const opt = document.createElement("option");
+        opt.value = u.id;
+        opt.textContent = u.name;
+        selectEl.appendChild(opt);
+      }
+    }
+
+    function buildReferenceTable(){
+      refBody.innerHTML = "";
+      for (const u of UNITS){
+        const tr = document.createElement("tr");
+
+        const td1 = document.createElement("td");
+        td1.textContent = u.name;
+        td1.style.fontFamily = "var(--sans)";
+        td1.style.color = "rgba(255,255,255,.86)";
+        td1.style.fontSize = "12px";
+        td1.style.fontWeight = "700";
+
+        const td2 = document.createElement("td");
+        td2.textContent = formatNumber(u.toPa) + " Pa";
+        td2.title = "Multiply a value in " + u.id + " by this to get Pa";
+
+        const td3 = document.createElement("td");
+        td3.className = "noteCell";
+        td3.textContent = u.notes;
+
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        refBody.appendChild(tr);
+      }
+    }
+
+    // Parses input like: "1,234.5", "  1.2e-3 ", "+5", "-.25"
+    function parseNumber(str){
+      if (!str) return { ok:false, value: NaN, reason: "Empty" };
+      const cleaned = String(str).trim().replace(/,/g, "");
+      if (cleaned === "") return { ok:false, value: NaN, reason: "Empty" };
+
+      // Allow typical JS numeric forms including exponent
+      const n = Number(cleaned);
+      if (!Number.isFinite(n)) return { ok:false, value: NaN, reason: "Not a valid number" };
+      return { ok:true, value: n, reason: "" };
+    }
+
+    // Smart formatting: keeps readability for huge/tiny numbers.
+    function formatNumber(n){
+      if (!Number.isFinite(n)) return "—";
+      if (n === 0) return "0";
+
+      const abs = Math.abs(n);
+
+      // Use scientific notation for very large/small values
+      if (abs >= 1e6 || abs < 1e-4){
+        // 6 significant figures feels good for a converter
+        return n.toExponential(6).replace(/(\.?\d*?)0+e/, "$1e").replace(/\.e/, "e");
+      }
+
+      // Otherwise show up to 10 decimal places trimmed
+      const fixed = n.toFixed(10);
+      return fixed.replace(/\.?0+$/, "");
+    }
+
+    function convert(value, fromId, toId){
+      const from = unitById[fromId];
+      const to   = unitById[toId];
+      const pa = value * from.toPa;
+      const out = pa / to.toPa;
+      return { pa, out };
+    }
+
+    function setBadge(kind, text){
+      validBadge.className = "badge " + (kind === "ok" ? "ok" : kind === "bad" ? "bad" : "");
+      validBadge.textContent = text;
+    }
+
+    function update(){
+      const parsed = parseNumber(valueInput.value);
+      const fromId = fromUnitSel.value;
+      const toId   = toUnitSel.value;
+
+      // Empty state
+      if (!valueInput.value.trim()){
+        resultBig.textContent = "—";
+        resultSmall.textContent = "Enter a value to convert.";
+        statusText.textContent = "No value entered.";
+        setBadge("", "Waiting…");
+        return;
+      }
+
+      if (!parsed.ok){
+        resultBig.textContent = "—";
+        resultSmall.textContent = "Try formats like 1.433, 101325, 1e-3, or 1,234.5";
+        statusText.textContent = "Input error: " + parsed.reason;
+        setBadge("bad", "Invalid input");
+        return;
+      }
+
+      const { pa, out } = convert(parsed.value, fromId, toId);
+
+      const fromLabel = unitById[fromId].name;
+      const toLabel   = unitById[toId].name;
+
+      resultBig.textContent = formatNumber(out) + " " + toId;
+      resultSmall.textContent =
+        `${formatNumber(parsed.value)} ${fromId} → ${formatNumber(pa)} Pa → ${formatNumber(out)} ${toId}`;
+
+      statusText.textContent = `Converted from ${fromLabel} to ${toLabel}.`;
+      setBadge("ok", "Ready");
+    }
+
+    async function copyResult(){
+      const txt = resultBig.textContent;
+      if (!txt || txt.trim() === "—") return;
+
+      try{
+        await navigator.clipboard.writeText(txt);
+        setBadge("ok", "Copied!");
+        setTimeout(update, 900);
+      }catch(e){
+        // Fallback if clipboard blocked
+        const ta = document.createElement("textarea");
+        ta.value = txt;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); setBadge("ok","Copied!"); }
+        catch { setBadge("bad","Copy failed"); }
+        document.body.removeChild(ta);
+        setTimeout(update, 900);
+      }
+    }
+
+    function resetAll(){
+      valueInput.value = "";
+      fromUnitSel.value = "atm";
+      toUnitSel.value = "mmHg";
+      update();
+      valueInput.focus();
+    }
+
+    function swapUnits(){
+      const a = fromUnitSel.value;
+      fromUnitSel.value = toUnitSel.value;
+      toUnitSel.value = a;
+      update();
+    }
+
+    // Click-to-copy on the result
+    function wireResultClick(){
+      const box = document.querySelector(".resultBox");
+      box.style.cursor = "pointer";
+      box.title = "Click to copy the result";
+      box.addEventListener("click", (e) => {
+        // Don't trigger if the user is selecting text
+        const sel = window.getSelection?.();
+        if (sel && String(sel).length > 0) return;
+        copyResult();
+      });
+    }
+
+    // --- Init
+    fillSelect(fromUnitSel);
+    fillSelect(toUnitSel);
+
+    // Good defaults for chemistry problems
+    fromUnitSel.value = "atm";
+    toUnitSel.value = "mmHg";
+
+    buildReferenceTable();
+    wireResultClick();
+    update();
+
+    // --- Events
+    valueInput.addEventListener("input", update);
+    fromUnitSel.addEventListener("change", update);
+    toUnitSel.addEventListener("change", update);
+    swapBtn.addEventListener("click", swapUnits);
+    copyBtn.addEventListener("click", copyResult);
+    clearBtn.addEventListener("click", resetAll);
+
+    // Enter key convenience: re-run + select output text visually
+    valueInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter"){
+        update();
+        copyResult();
+      }
+    });
+  </script>
+</body>
+</html>
