@@ -719,6 +719,70 @@
           { solveFor:"T", pretty:"T = (PV)/(nR)", calc:(x)=> (x.P*x.V)/(x.n*x.R), outKind:"temp" }
         ]
       },
+
+      /* ✅ ADDED: Boyle's Law */
+      {
+        id:"boyles",
+        title:"Boyle’s Law",
+        tag:"Gas Laws",
+        desc:"P₁V₁ = P₂V₂ (T and n constant). Lock anything held constant (or just solve directly).",
+        variables: [
+          { key:"P1", label:"P₁", kind:"pressure", baseUnit:"atm", outUnits:["atm","kPa","mmHg"] },
+          { key:"V1", label:"V₁", kind:"volume", baseUnit:"L", outUnits:["L","mL"] },
+          { key:"P2", label:"P₂", kind:"pressure", baseUnit:"atm", outUnits:["atm","kPa","mmHg"] },
+          { key:"V2", label:"V₂", kind:"volume", baseUnit:"L", outUnits:["L","mL"] }
+        ],
+        solveFor:["P2","V2","P1","V1"],
+        forms:[
+          { solveFor:"P2", pretty:"P₂ = (P₁V₁)/V₂", calc:(x)=> (x.P1*x.V1)/x.V2, outKind:"pressure" },
+          { solveFor:"V2", pretty:"V₂ = (P₁V₁)/P₂", calc:(x)=> (x.P1*x.V1)/x.P2, outKind:"volume" },
+          { solveFor:"P1", pretty:"P₁ = (P₂V₂)/V₁", calc:(x)=> (x.P2*x.V2)/x.V1, outKind:"pressure" },
+          { solveFor:"V1", pretty:"V₁ = (P₂V₂)/P₁", calc:(x)=> (x.P2*x.V2)/x.P1, outKind:"volume" }
+        ]
+      },
+
+      /* ✅ ADDED: Amontons's (Gay-Lussac's) Law */
+      {
+        id:"amontons",
+        title:"Amontons’s Law (P–T)",
+        tag:"Gas Laws",
+        desc:"P₁/T₁ = P₂/T₂ (V and n constant). Use K for temperatures (or type °C then click C → K).",
+        variables: [
+          { key:"P1", label:"P₁", kind:"pressure", baseUnit:"atm", outUnits:["atm","kPa","mmHg"] },
+          { key:"T1", label:"T₁", kind:"temp", baseUnit:"K", outUnits:["K","°C"] },
+          { key:"P2", label:"P₂", kind:"pressure", baseUnit:"atm", outUnits:["atm","kPa","mmHg"] },
+          { key:"T2", label:"T₂", kind:"temp", baseUnit:"K", outUnits:["K","°C"] }
+        ],
+        solveFor:["P2","T2","P1","T1"],
+        forms:[
+          { solveFor:"P2", pretty:"P₂ = P₁(T₂/T₁)", calc:(x)=> x.P1*(x.T2/x.T1), outKind:"pressure" },
+          { solveFor:"T2", pretty:"T₂ = T₁(P₂/P₁)", calc:(x)=> x.T1*(x.P2/x.P1), outKind:"temp" },
+          { solveFor:"P1", pretty:"P₁ = P₂(T₁/T₂)", calc:(x)=> x.P2*(x.T1/x.T2), outKind:"pressure" },
+          { solveFor:"T1", pretty:"T₁ = T₂(P₁/P₂)", calc:(x)=> x.T2*(x.P1/x.P2), outKind:"temp" }
+        ]
+      },
+
+      /* ✅ ADDED: Avogadro's Law */
+      {
+        id:"avogadro",
+        title:"Avogadro’s Law",
+        tag:"Gas Laws",
+        desc:"V₁/n₁ = V₂/n₂ (P and T constant). Lock any constant values if needed.",
+        variables: [
+          { key:"V1", label:"V₁", kind:"volume", baseUnit:"L", outUnits:["L","mL"] },
+          { key:"n1", label:"n₁", kind:"amount", baseUnit:"mol", outUnits:["mol","mmol"] },
+          { key:"V2", label:"V₂", kind:"volume", baseUnit:"L", outUnits:["L","mL"] },
+          { key:"n2", label:"n₂", kind:"amount", baseUnit:"mol", outUnits:["mol","mmol"] }
+        ],
+        solveFor:["V2","n2","V1","n1"],
+        forms:[
+          { solveFor:"V2", pretty:"V₂ = V₁(n₂/n₁)", calc:(x)=> x.V1*(x.n2/x.n1), outKind:"volume" },
+          { solveFor:"n2", pretty:"n₂ = n₁(V₂/V₁)", calc:(x)=> x.n1*(x.V2/x.V1), outKind:"amount" },
+          { solveFor:"V1", pretty:"V₁ = V₂(n₁/n₂)", calc:(x)=> x.V2*(x.n1/x.n2), outKind:"volume" },
+          { solveFor:"n1", pretty:"n₁ = n₂(V₁/V₂)", calc:(x)=> x.n2*(x.V1/x.V2), outKind:"amount" }
+        ]
+      },
+
       {
         id:"combined_gas",
         title:"Combined Gas Law",
