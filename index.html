@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Pressure Unit Converter</title>
+  <title>ChemCheatcode • Pressure Unit Converter</title>
   <style>
     :root{
       --bg: #0b1020;
@@ -42,7 +42,84 @@
     .wrap{
       width:min(1100px, 100%);
       margin: 0 auto;
-      padding: 28px 18px 40px;
+      padding: 22px 18px 40px;
+    }
+
+    /* ===== Top Navigation (added) ===== */
+    .topNav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 12px 12px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      margin-bottom: 14px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      min-width: 220px;
+    }
+    .logo{
+      width:34px;height:34px;border-radius:12px;
+      background: linear-gradient(135deg, rgba(77,163,255,.95), rgba(102,255,199,.55));
+      box-shadow: 0 0 0 5px rgba(77,163,255,.10);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .brandText{
+      display:flex; flex-direction:column; gap:2px;
+      line-height:1.1;
+    }
+    .brandText b{font-size:13px; letter-spacing:.2px;}
+    .brandText span{font-size:12px; color: var(--muted2);}
+    .tabs{
+      display:flex;
+      gap: 8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .tab{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing:.2px;
+      transition: border-color .15s ease, background .15s ease, transform .05s ease;
+      user-select:none;
+      text-decoration:none;
+    }
+    .tab:hover{
+      border-color: rgba(77,163,255,.55);
+      background: rgba(77,163,255,.10);
+    }
+    .tab:active{ transform: translateY(1px); }
+    .tab.active{
+      border-color: rgba(77,163,255,.65);
+      color: rgba(255,255,255,.92);
+      background: linear-gradient(135deg, rgba(77,163,255,.25), rgba(102,255,199,.14));
+    }
+    .tabDot{
+      width:10px;height:10px;border-radius:50%;
+      background: rgba(255,255,255,.25);
+      box-shadow: 0 0 0 4px rgba(255,255,255,.06);
+    }
+    .tab.active .tabDot{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 5px rgba(77,163,255,.10);
+    }
+    @media (max-width: 720px){
+      .topNav{flex-direction:column; align-items:stretch;}
+      .tabs{justify-content:flex-start;}
     }
 
     header{
@@ -342,19 +419,36 @@
       font-size: 12px;
       line-height:1.35;
     }
-
-    .srOnly{
-      position:absolute;
-      width:1px;height:1px;
-      padding:0;margin:-1px;
-      overflow:hidden;clip:rect(0,0,0,0);
-      white-space:nowrap;border:0;
-    }
   </style>
 </head>
 
 <body>
   <div class="wrap">
+
+    <!-- ===== Navigation bar (added) ===== -->
+    <div class="topNav" role="navigation" aria-label="ChemCheatcode navigation">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="brandText">
+          <b>ChemCheatcode</b>
+          <span>Converters & Formula Tools</span>
+        </div>
+      </div>
+
+      <div class="tabs" aria-label="Pages">
+        <a class="tab active" href="index.html">
+          <span class="tabDot" aria-hidden="true"></span>
+          <span>Converters</span>
+        </a>
+
+        <!-- Cache-buster: bump v=1 → v=2 if your browser caches -->
+        <a class="tab" href="algebra.html?v=1">
+          <span class="tabDot" aria-hidden="true"></span>
+          <span>Formula Solver</span>
+        </a>
+      </div>
+    </div>
+
     <header>
       <div class="title">
         <h1>Pressure Converter</h1>
@@ -465,60 +559,15 @@
     // --- Unit map: "toPa" means: (value in this unit) * toPa = value in pascals.
     // These are taken directly from the image chart.
     const UNITS = [
-      {
-        id: "Pa",
-        name: "pascal (Pa)",
-        toPa: 1,
-        notes: "SI unit for pressure. 1 Pa = 1 N/m²."
-      },
-      {
-        id: "kPa",
-        name: "kilopascal (kPa)",
-        toPa: 1000,
-        notes: "1 kPa = 1000 Pa."
-      },
-      {
-        id: "psi",
-        name: "pounds per square inch (psi)",
-        toPa: 6894.8,
-        notes: "Common in US engineering/tires."
-      },
-      {
-        id: "atm",
-        name: "atmosphere (atm)",
-        toPa: 101325,
-        notes: "Approximate average air pressure at sea level."
-      },
-      {
-        id: "bar",
-        name: "bar (bar or b)",
-        toPa: 100000,
-        notes: "Commonly used in meteorology."
-      },
-      {
-        id: "mbar",
-        name: "millibar (mbar or mb)",
-        toPa: 100,
-        notes: "1 mbar = 100 Pa."
-      },
-      {
-        id: "inHg",
-        name: "inches of mercury (inHg)",
-        toPa: 3386.4,
-        notes: "Commonly used in aviation."
-      },
-      {
-        id: "mmHg",
-        name: "millimeters of mercury (mmHg)",
-        toPa: 133.32,
-        notes: "Also close to torr."
-      },
-      {
-        id: "torr",
-        name: "torr (torr)",
-        toPa: 133.32,
-        notes: "Very close to 1 mmHg (difference is tiny)."
-      }
+      { id: "Pa",   name: "pascal (Pa)",                    toPa: 1,       notes: "SI unit for pressure. 1 Pa = 1 N/m²." },
+      { id: "kPa",  name: "kilopascal (kPa)",               toPa: 1000,    notes: "1 kPa = 1000 Pa." },
+      { id: "psi",  name: "pounds per square inch (psi)",   toPa: 6894.8,  notes: "Common in US engineering/tires." },
+      { id: "atm",  name: "atmosphere (atm)",               toPa: 101325,  notes: "Approximate average air pressure at sea level." },
+      { id: "bar",  name: "bar (bar or b)",                 toPa: 100000,  notes: "Commonly used in meteorology." },
+      { id: "mbar", name: "millibar (mbar or mb)",          toPa: 100,     notes: "1 mbar = 100 Pa." },
+      { id: "inHg", name: "inches of mercury (inHg)",       toPa: 3386.4,  notes: "Commonly used in aviation." },
+      { id: "mmHg", name: "millimeters of mercury (mmHg)",  toPa: 133.32,  notes: "Also close to torr." },
+      { id: "torr", name: "torr (torr)",                    toPa: 133.32,  notes: "Very close to 1 mmHg (difference is tiny)." }
     ];
 
     const unitById = Object.fromEntries(UNITS.map(u => [u.id, u]));
@@ -538,7 +587,6 @@
 
     const refBody     = document.getElementById("refBody");
 
-    // --- Helpers
     function fillSelect(selectEl){
       selectEl.innerHTML = "";
       for (const u of UNITS){
@@ -576,32 +624,25 @@
       }
     }
 
-    // Parses input like: "1,234.5", "  1.2e-3 ", "+5", "-.25"
     function parseNumber(str){
       if (!str) return { ok:false, value: NaN, reason: "Empty" };
       const cleaned = String(str).trim().replace(/,/g, "");
       if (cleaned === "") return { ok:false, value: NaN, reason: "Empty" };
 
-      // Allow typical JS numeric forms including exponent
       const n = Number(cleaned);
       if (!Number.isFinite(n)) return { ok:false, value: NaN, reason: "Not a valid number" };
       return { ok:true, value: n, reason: "" };
     }
 
-    // Smart formatting: keeps readability for huge/tiny numbers.
     function formatNumber(n){
       if (!Number.isFinite(n)) return "—";
       if (n === 0) return "0";
 
       const abs = Math.abs(n);
-
-      // Use scientific notation for very large/small values
       if (abs >= 1e6 || abs < 1e-4){
-        // 6 significant figures feels good for a converter
         return n.toExponential(6).replace(/(\.?\d*?)0+e/, "$1e").replace(/\.e/, "e");
       }
 
-      // Otherwise show up to 10 decimal places trimmed
       const fixed = n.toFixed(10);
       return fixed.replace(/\.?0+$/, "");
     }
@@ -624,7 +665,6 @@
       const fromId = fromUnitSel.value;
       const toId   = toUnitSel.value;
 
-      // Empty state
       if (!valueInput.value.trim()){
         resultBig.textContent = "—";
         resultSmall.textContent = "Enter a value to convert.";
@@ -663,7 +703,6 @@
         setBadge("ok", "Copied!");
         setTimeout(update, 900);
       }catch(e){
-        // Fallback if clipboard blocked
         const ta = document.createElement("textarea");
         ta.value = txt;
         document.body.appendChild(ta);
@@ -690,24 +729,20 @@
       update();
     }
 
-    // Click-to-copy on the result
     function wireResultClick(){
       const box = document.querySelector(".resultBox");
       box.style.cursor = "pointer";
       box.title = "Click to copy the result";
-      box.addEventListener("click", (e) => {
-        // Don't trigger if the user is selecting text
+      box.addEventListener("click", () => {
         const sel = window.getSelection?.();
         if (sel && String(sel).length > 0) return;
         copyResult();
       });
     }
 
-    // --- Init
     fillSelect(fromUnitSel);
     fillSelect(toUnitSel);
 
-    // Good defaults for chemistry problems
     fromUnitSel.value = "atm";
     toUnitSel.value = "mmHg";
 
@@ -715,7 +750,6 @@
     wireResultClick();
     update();
 
-    // --- Events
     valueInput.addEventListener("input", update);
     fromUnitSel.addEventListener("change", update);
     toUnitSel.addEventListener("change", update);
@@ -723,7 +757,6 @@
     copyBtn.addEventListener("click", copyResult);
     clearBtn.addEventListener("click", resetAll);
 
-    // Enter key convenience: re-run + select output text visually
     valueInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter"){
         update();
