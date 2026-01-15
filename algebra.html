@@ -1,0 +1,1310 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ChemCheatcode • Algebra Solver</title>
+  <meta name="color-scheme" content="dark light" />
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:#0f1a2f;
+      --panel2:#0c1526;
+      --card:#111f3a;
+      --text:#eaf1ff;
+      --muted:#a8b6d6;
+      --muted2:#7e90b8;
+      --line:rgba(255,255,255,.10);
+      --line2:rgba(255,255,255,.14);
+      --blue:#2d7dff;
+      --blue2:#57a0ff;
+      --good:#35d07f;
+      --warn:#ffcc66;
+      --bad:#ff5c77;
+      --shadow: 0 18px 40px rgba(0,0,0,.35);
+      --radius: 16px;
+      --radius2: 12px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background: radial-gradient(1100px 700px at 20% -10%, rgba(45,125,255,.28), transparent 60%),
+                  radial-gradient(900px 650px at 80% 10%, rgba(87,160,255,.14), transparent 55%),
+                  linear-gradient(180deg, #071023, #050a15 70%);
+      color:var(--text);
+    }
+    a{color:inherit;text-decoration:none}
+    .app{
+      display:grid;
+      grid-template-columns: 270px 1fr;
+      min-height:100vh;
+    }
+    /* Sidebar */
+    .side{
+      border-right:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(15,26,47,.92), rgba(9,16,30,.92));
+      padding:18px 14px;
+      position:sticky; top:0; height:100vh;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      padding:12px 12px 14px 12px;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 10px 22px rgba(0,0,0,.22);
+    }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background: radial-gradient(circle at 30% 30%, rgba(87,160,255,.95), rgba(45,125,255,.35) 60%, rgba(45,125,255,.12) 100%);
+      border:1px solid rgba(255,255,255,.14);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo:after{
+      content:"";
+      position:absolute; inset:-40%;
+      background: conic-gradient(from 180deg, transparent, rgba(255,255,255,.25), transparent 55%);
+      animation: spin 5.5s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .brand h1{font-size:14px; margin:0; letter-spacing:.3px}
+    .brand p{margin:2px 0 0 0; color:var(--muted2); font-size:12px}
+
+    .nav{
+      margin-top:14px;
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .nav a{
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border-radius: 12px;
+      border:1px solid transparent;
+      color: var(--muted);
+      background: transparent;
+      transition:.15s ease;
+    }
+    .nav a:hover{background: rgba(255,255,255,.04); color:var(--text); border-color: var(--line)}
+    .nav a.active{
+      background: linear-gradient(90deg, rgba(45,125,255,.25), rgba(45,125,255,.06));
+      border-color: rgba(45,125,255,.35);
+      color: var(--text);
+    }
+    .nav .dot{
+      width:10px; height:10px; border-radius:100px;
+      background: rgba(168,182,214,.35);
+      box-shadow: 0 0 0 3px rgba(168,182,214,.12);
+    }
+    .nav a.active .dot{
+      background: var(--blue2);
+      box-shadow: 0 0 0 3px rgba(87,160,255,.18);
+    }
+
+    .side .hint{
+      margin-top:14px;
+      padding:12px;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+      font-size:12px;
+      line-height:1.45;
+    }
+    .kbd{
+      font-family:var(--mono);
+      font-size:11px;
+      padding:1px 6px;
+      border:1px solid var(--line2);
+      border-bottom-color: rgba(255,255,255,.26);
+      border-radius: 8px;
+      background: rgba(0,0,0,.20);
+      color: var(--text);
+      display:inline-block;
+      margin:0 2px;
+    }
+
+    /* Main */
+    .main{
+      padding: 18px 18px 28px 18px;
+    }
+    .topbar{
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+      padding: 14px 16px;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow);
+      position:sticky; top:10px; z-index:5;
+      backdrop-filter: blur(10px);
+    }
+    .title{
+      display:flex; flex-direction:column; gap:2px;
+    }
+    .title h2{margin:0; font-size:16px; letter-spacing:.2px}
+    .title span{color:var(--muted2); font-size:12px}
+    .controls{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .search{
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      min-width: 280px;
+    }
+    .search input{
+      width:100%;
+      border:none; outline:none; background:transparent;
+      color:var(--text); font-size:13px;
+    }
+    .pill{
+      display:flex; align-items:center; gap:10px;
+      padding:10px 12px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      color: var(--muted);
+      font-size:13px;
+    }
+    select, button, input{
+      font-family:inherit;
+    }
+    select{
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      padding:9px 10px;
+      border-radius: 12px;
+      outline:none;
+      font-size:13px;
+    }
+    button{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      padding:9px 12px;
+      border-radius: 12px;
+      cursor:pointer;
+      transition:.15s ease;
+      font-size:13px;
+    }
+    button:hover{border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.06)}
+    button.primary{
+      border-color: rgba(45,125,255,.40);
+      background: linear-gradient(90deg, rgba(45,125,255,.30), rgba(45,125,255,.10));
+    }
+    button.primary:hover{border-color: rgba(87,160,255,.55)}
+    button.ghost{
+      background: transparent;
+    }
+    button.bad{
+      border-color: rgba(255,92,119,.35);
+      background: rgba(255,92,119,.10);
+    }
+
+    .grid{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+
+    .card{
+      grid-column: span 12;
+      border:1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(17,31,58,.80), rgba(10,18,34,.78));
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .cardHead{
+      padding: 14px 16px;
+      display:flex; gap:12px; align-items:flex-start; justify-content:space-between;
+      border-bottom:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+    }
+    .cardHead .meta{
+      display:flex; flex-direction:column; gap:4px;
+      min-width: 220px;
+    }
+    .cardHead .meta h3{
+      margin:0; font-size:15px; letter-spacing:.2px;
+      display:flex; align-items:center; gap:10px;
+    }
+    .tag{
+      font-size:11px;
+      padding:2px 8px;
+      border-radius: 999px;
+      border:1px solid rgba(45,125,255,.35);
+      color: rgba(230,240,255,.9);
+      background: rgba(45,125,255,.12);
+    }
+    .cardHead .meta p{margin:0; color:var(--muted2); font-size:12px; line-height:1.35}
+
+    .cardHead .actions{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .seg{
+      display:flex;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.16);
+      border-radius: 12px;
+      overflow:hidden;
+    }
+    .seg button{
+      border:none;
+      border-right:1px solid var(--line);
+      border-radius: 0;
+      padding:9px 10px;
+      background: transparent;
+      color: var(--muted);
+    }
+    .seg button:last-child{border-right:none}
+    .seg button.active{
+      background: rgba(45,125,255,.20);
+      color: var(--text);
+    }
+    .body{
+      padding: 14px 16px 16px 16px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px;
+    }
+    @media (max-width: 980px){
+      .app{grid-template-columns:1fr}
+      .side{position:relative; height:auto}
+      .body{grid-template-columns:1fr}
+      .search{min-width: 0; width: 100%}
+      .controls{width:100%}
+      .topbar{top:0}
+    }
+    .inputs{
+      border:1px solid var(--line);
+      border-radius: var(--radius2);
+      background: rgba(0,0,0,.14);
+      padding: 12px;
+    }
+    .inputs .row{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .field{
+      display:flex; flex-direction:column; gap:6px;
+    }
+    .field label{
+      font-size:12px; color: var(--muted);
+      display:flex; justify-content:space-between; gap:10px;
+    }
+    .field label .u{color:var(--muted2); font-family:var(--mono); font-size:11px}
+    .field input{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      padding:10px 10px;
+      border-radius: 12px;
+      outline:none;
+      font-size:13px;
+      font-family: var(--mono);
+    }
+    .field input:focus{border-color: rgba(87,160,255,.55)}
+    .helper{
+      font-size:12px; color: var(--muted2);
+      margin-top:10px;
+      line-height:1.45;
+    }
+    .helper .chip{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:2px 8px;
+      border-radius: 999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+      margin: 2px 6px 2px 0;
+      font-family: var(--mono);
+      font-size:11px;
+      color: var(--muted);
+    }
+
+    .output{
+      border:1px solid var(--line);
+      border-radius: var(--radius2);
+      background: rgba(0,0,0,.14);
+      padding: 12px;
+      display:flex; flex-direction:column; gap:10px;
+    }
+    .big{
+      display:flex; align-items:baseline; justify-content:space-between; gap:10px;
+      padding: 12px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(45,125,255,.16), rgba(0,0,0,.14));
+    }
+    .big .lhs{display:flex; flex-direction:column; gap:4px}
+    .big .lhs .k{color:var(--muted2); font-size:12px}
+    .big .lhs .v{
+      font-family: var(--mono);
+      font-size: 18px;
+      letter-spacing: .2px;
+      word-break: break-word;
+    }
+    .status{
+      font-size:12px;
+      padding:8px 10px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      color: var(--muted);
+      background: rgba(255,255,255,.03);
+      line-height:1.35;
+    }
+    .status.good{border-color: rgba(53,208,127,.35); background: rgba(53,208,127,.10); color: rgba(216,255,234,.92)}
+    .status.warn{border-color: rgba(255,204,102,.40); background: rgba(255,204,102,.10); color: rgba(255,242,216,.92)}
+    .status.bad{border-color: rgba(255,92,119,.40); background: rgba(255,92,119,.10); color: rgba(255,220,226,.92)}
+
+    .eq{
+      border:1px solid var(--line);
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.02);
+      padding: 10px 12px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: rgba(234,241,255,.92);
+    }
+    .eq .pretty{white-space:nowrap; overflow:auto}
+    .eq button{
+      padding:7px 10px;
+      border-radius: 10px;
+      font-size:12px;
+    }
+    details{
+      border:1px solid var(--line);
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.02);
+      overflow:hidden;
+    }
+    details summary{
+      cursor:pointer;
+      padding: 10px 12px;
+      list-style:none;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      color: var(--muted);
+      user-select:none;
+    }
+    details summary::-webkit-details-marker{display:none}
+    details .inside{padding: 10px 12px 12px 12px; border-top:1px solid var(--line)}
+    .forms{
+      display:flex; flex-direction:column; gap:8px;
+    }
+
+    .footerNote{
+      margin-top:14px;
+      color: var(--muted2);
+      font-size:12px;
+      line-height:1.5;
+      padding: 12px 14px;
+      border:1px dashed rgba(255,255,255,.16);
+      border-radius: var(--radius);
+      background: rgba(0,0,0,.14);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="side">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>ChemCheatcode</h1>
+          <p>Algebra Solver</p>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Site navigation">
+        <a href="index.html">
+          <span class="dot" aria-hidden="true"></span>
+          <span>Converters</span>
+        </a>
+        <a class="active" href="algebra.html">
+          <span class="dot" aria-hidden="true"></span>
+          <span>Formula Solver</span>
+        </a>
+      </nav>
+
+      <div class="hint">
+        <div style="margin-bottom:8px; font-weight:600; color:rgba(234,241,255,.92);">Input tips</div>
+        Type values with units (or just numbers):
+        <div style="margin-top:8px">
+          <span class="kbd">25 C</span>
+          <span class="kbd">298 K</span>
+          <span class="kbd">760 mmHg</span>
+          <span class="kbd">101.3 kPa</span>
+          <span class="kbd">250 mL</span>
+          <span class="kbd">3.0 L</span>
+        </div>
+        <div style="margin-top:10px">
+          Bare numbers default to the card’s base units (atm, L, mol, K, etc.).
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="title">
+          <h2>Formula Solver</h2>
+          <span>Select a formula card → choose what to solve for → enter values → get the rearranged equation + answer.</span>
+        </div>
+        <div class="controls">
+          <div class="search" role="search" aria-label="Search formulas">
+            <span style="opacity:.8">🔎</span>
+            <input id="searchInput" type="text" placeholder="Search (e.g., gas, dilution, beer, dalton, q=mcΔT)" />
+          </div>
+          <div class="pill" title="Significant figures setting">
+            <span style="opacity:.9">Sig figs</span>
+            <select id="sigSelect" aria-label="Significant figures">
+              <option value="3" selected>3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </div>
+          <button id="resetAll" class="bad" type="button">Reset all</button>
+        </div>
+      </header>
+
+      <section class="grid" id="cards"></section>
+
+      <div class="footerNote">
+        <b>Note:</b> This page is designed to stay clean and readable. It shows the <i>one</i> rearrangement needed for your chosen target,
+        and keeps “All rearrangements” collapsible so it never feels like a wall of math.
+      </div>
+    </main>
+  </div>
+
+  <script>
+    /**********************
+     * Units + parsing
+     **********************/
+    const BASE = {
+      P: { unit: "atm", kind: "pressure" },
+      V: { unit: "L",   kind: "volume" },
+      n: { unit: "mol", kind: "amount" },
+      T: { unit: "K",   kind: "temp" },
+      m: { unit: "g",   kind: "mass" },
+      d: { unit: "g/L", kind: "density" },
+      M: { unit: "M",   kind: "molarity" },  // mol/L
+      c: { unit: "M",   kind: "molarity" },  // Beer-Lambert uses concentration
+      A: { unit: "",    kind: "unitless" },
+      eps:{unit:"",     kind:"epsilon"},     // user provided
+      l: { unit: "cm",  kind: "length" },
+      q: { unit: "J",   kind: "energy" },
+      C: { unit: "J/g·°C", kind: "heatcap" }, // treat as "J/gC"
+      dT:{ unit:"°C",   kind:"tempDelta" },
+      DH:{ unit:"kJ/mol", kind:"enthalpy" },
+      X: { unit:"", kind:"unitless" },
+      Ptot:{ unit:"atm", kind:"pressure" },
+      Pi:{ unit:"atm", kind:"pressure" },
+      ri:{ unit:"", kind:"unitless" },
+      Mi:{ unit:"g/mol", kind:"molarmass" },
+      rate:{ unit:"", kind:"unitless" }
+    };
+
+    // Convert from (value, unit) -> base for that kind
+    function toBase(kind, value, unitRaw){
+      const u = (unitRaw || "").trim().toLowerCase().replaceAll("°","").replaceAll(" ", "");
+      const v = value;
+
+      // helper
+      const bad = () => ({ ok:false, msg:`Unsupported unit "${unitRaw}"` });
+
+      if(kind === "unitless" || kind === "epsilon"){ return { ok:true, val:v, unit:unitRaw||"" }; }
+
+      if(kind === "pressure"){
+        if(!u || u==="atm") return { ok:true, val:v, unit:"atm" };
+        if(u==="kpa") return { ok:true, val:v/101.325, unit:"atm" };
+        if(u==="pa")  return { ok:true, val:v/101325, unit:"atm" };
+        if(u==="mmhg" || u==="torr") return { ok:true, val:v/760, unit:"atm" };
+        return bad();
+      }
+      if(kind === "volume"){
+        if(!u || u==="l" || u==="lt" || u==="liter" || u==="liters") return { ok:true, val:v, unit:"L" };
+        if(u==="ml" || u==="milliliter" || u==="milliliters") return { ok:true, val:v/1000, unit:"L" };
+        return bad();
+      }
+      if(kind === "amount"){
+        if(!u || u==="mol") return { ok:true, val:v, unit:"mol" };
+        if(u==="mmol") return { ok:true, val:v/1000, unit:"mol" };
+        return bad();
+      }
+      if(kind === "temp"){
+        if(!u || u==="k") return { ok:true, val:v, unit:"K" };
+        if(u==="c" || u==="degc" || u==="celsius") return { ok:true, val:v + 273.15, unit:"K", note:"converted from °C to K" };
+        return bad();
+      }
+      if(kind === "tempDelta"){
+        // ΔT in °C equals ΔT in K numerically.
+        if(!u || u==="c" || u==="k" || u==="degc") return { ok:true, val:v, unit:"°C" };
+        return bad();
+      }
+      if(kind === "mass"){
+        if(!u || u==="g") return { ok:true, val:v, unit:"g" };
+        if(u==="kg") return { ok:true, val:v*1000, unit:"g" };
+        return bad();
+      }
+      if(kind === "length"){
+        // base = cm (to match typical Beer-Lambert path length usage)
+        if(!u || u==="cm") return { ok:true, val:v, unit:"cm" };
+        if(u==="m") return { ok:true, val:v*100, unit:"cm" };
+        if(u==="mm") return { ok:true, val:v/10, unit:"cm" };
+        return bad();
+      }
+      if(kind === "energy"){
+        if(!u || u==="j") return { ok:true, val:v, unit:"J" };
+        if(u==="kj") return { ok:true, val:v*1000, unit:"J" };
+        return bad();
+      }
+      if(kind === "enthalpy"){
+        // base = kJ/mol (we store as kJ/mol, because typical chem problems do)
+        if(!u || u==="kj/mol" || u==="kjpermol") return { ok:true, val:v, unit:"kJ/mol" };
+        if(u==="j/mol" || u==="jpermol") return { ok:true, val:v/1000, unit:"kJ/mol" };
+        return bad();
+      }
+      if(kind === "molarity"){
+        // base = M = mol/L
+        if(!u || u==="m" || u==="mol/l" || u==="molperliter") return { ok:true, val:v, unit:"M" };
+        if(u==="mm" || u==="mmolar" || u==="mmol/l") return { ok:true, val:v/1000, unit:"M" };
+        return bad();
+      }
+      if(kind === "density"){
+        // base = g/L
+        if(!u || u==="g/l" || u==="gperl") return { ok:true, val:v, unit:"g/L" };
+        if(u==="g/ml") return { ok:true, val:v*1000, unit:"g/L" };
+        if(u==="kg/m3" || u==="kg/m^3") return { ok:true, val:v, unit:"g/L" }; // 1 kg/m^3 = 1 g/L
+        return bad();
+      }
+      if(kind === "heatcap"){
+        // base = J/(g·°C). Accept: J/gC, J/(g*C), J/gK, etc. (Δ uses same magnitude)
+        if(!u || u==="j/gc" || u==="j/gk" || u==="j/(gc)" || u==="j/(g*c)" || u==="j/(gk)") return { ok:true, val:v, unit:"J/g·°C" };
+        return bad();
+      }
+      if(kind === "molarmass"){
+        // base = g/mol
+        if(!u || u==="g/mol" || u==="gpermol") return { ok:true, val:v, unit:"g/mol" };
+        if(u==="kg/mol") return { ok:true, val:v*1000, unit:"g/mol" };
+        return bad();
+      }
+      return bad();
+    }
+
+    // Convert from base -> desired output unit (limited)
+    function fromBase(kind, value, outUnitRaw){
+      const u = (outUnitRaw || "").trim().toLowerCase().replaceAll("°","").replaceAll(" ", "");
+      const v = value;
+
+      if(kind === "unitless" || kind === "epsilon") return { ok:true, val:v, unit:outUnitRaw||"" };
+
+      if(kind === "pressure"){
+        if(!u || u==="atm") return { ok:true, val:v, unit:"atm" };
+        if(u==="kpa") return { ok:true, val:v*101.325, unit:"kPa" };
+        if(u==="mmhg" || u==="torr") return { ok:true, val:v*760, unit:"mmHg" };
+        return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
+      }
+      if(kind === "volume"){
+        if(!u || u==="l") return { ok:true, val:v, unit:"L" };
+        if(u==="ml") return { ok:true, val:v*1000, unit:"mL" };
+        return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
+      }
+      if(kind === "amount"){
+        if(!u || u==="mol") return { ok:true, val:v, unit:"mol" };
+        if(u==="mmol") return { ok:true, val:v*1000, unit:"mmol" };
+        return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
+      }
+      if(kind === "temp"){
+        if(!u || u==="k") return { ok:true, val:v, unit:"K" };
+        if(u==="c") return { ok:true, val:v - 273.15, unit:"°C" };
+        return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
+      }
+      if(kind === "mass"){
+        if(!u || u==="g") return { ok:true, val:v, unit:"g" };
+        if(u==="kg") return { ok:true, val:v/1000, unit:"kg" };
+        return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
+      }
+      if(kind === "energy"){
+        if(!u || u==="j") return { ok:true, val:v, unit:"J" };
+        if(u==="kj") return { ok:true, val:v/1000, unit:"kJ" };
+        return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
+      }
+      if(kind === "molarity"){
+        if(!u || u==="m") return { ok:true, val:v, unit:"M" };
+        if(u==="mm") return { ok:true, val:v*1000, unit:"mM" };
+        return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
+      }
+      if(kind === "density"){
+        if(!u || u==="g/l") return { ok:true, val:v, unit:"g/L" };
+        if(u==="g/ml") return { ok:true, val:v/1000, unit:"g/mL" };
+        if(u==="kg/m3" || u==="kg/m^3") return { ok:true, val:v, unit:"kg/m³" };
+        return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
+      }
+      if(kind === "enthalpy"){
+        if(!u || u==="kj/mol") return { ok:true, val:v, unit:"kJ/mol" };
+        if(u==="j/mol") return { ok:true, val:v*1000, unit:"J/mol" };
+        return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
+      }
+      if(kind === "length"){
+        if(!u || u==="cm") return { ok:true, val:v, unit:"cm" };
+        if(u==="m") return { ok:true, val:v/100, unit:"m" };
+        if(u==="mm") return { ok:true, val:v*10, unit:"mm" };
+        return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
+      }
+      if(kind === "molarmass"){
+        if(!u || u==="g/mol") return { ok:true, val:v, unit:"g/mol" };
+        if(u==="kg/mol") return { ok:true, val:v/1000, unit:"kg/mol" };
+        return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
+      }
+      return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
+    }
+
+    function parseNumberAndUnit(raw){
+      const s = (raw ?? "").toString().trim();
+      if(!s) return { ok:false, msg:"Empty" };
+
+      // allow stuff like "1.23e-4", "1,234"
+      const cleaned = s.replaceAll(",", "").trim();
+
+      // Split into (number)(unit)
+      // Examples: "25 C", "760mmHg", "3.0 L"
+      const m = cleaned.match(/^([+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?)\s*([a-zA-Z°µ\/\.\-\^\*\(\)]+)?$/);
+      if(!m) return { ok:false, msg:"Could not parse" };
+
+      const num = Number(m[1]);
+      if(!Number.isFinite(num)) return { ok:false, msg:"Not a valid number" };
+
+      const unit = (m[2] || "").trim();
+      return { ok:true, num, unit };
+    }
+
+    function sigFormat(x, sig){
+      if(!Number.isFinite(x)) return "—";
+      if(x === 0) return "0";
+      const s = Number(sig || 3);
+      return Number(x).toPrecision(s).replace(/(?:\.0+|(\.\d+?)0+)$/, "$1");
+    }
+
+    function clampNice(x){
+      // prevent -0
+      if(Object.is(x, -0)) return 0;
+      return x;
+    }
+
+    /**********************
+     * Formula library
+     **********************/
+    const R_ATM = 0.082057; // L·atm/(mol·K)
+    const formulas = [
+      {
+        id:"ideal_gas",
+        title:"Ideal Gas Law",
+        tag:"Gas Laws",
+        desc:"PV = nRT (base units: atm, L, mol, K). R = 0.082057 L·atm/(mol·K).",
+        variables: [
+          { key:"P", label:"Pressure (P)", kind:"pressure", baseUnit:"atm", outUnits:["atm","kPa","mmHg"] },
+          { key:"V", label:"Volume (V)", kind:"volume", baseUnit:"L", outUnits:["L","mL"] },
+          { key:"n", label:"Moles (n)", kind:"amount", baseUnit:"mol", outUnits:["mol","mmol"] },
+          { key:"T", label:"Temperature (T)", kind:"temp", baseUnit:"K", outUnits:["K","°C"] }
+        ],
+        solveFor:["P","V","n","T"],
+        forms:[
+          { solveFor:"P", pretty:"P = (nRT)/V", calc:(x)=> (x.n*R_ATM*x.T)/x.V, outKind:"pressure" },
+          { solveFor:"V", pretty:"V = (nRT)/P", calc:(x)=> (x.n*R_ATM*x.T)/x.P, outKind:"volume" },
+          { solveFor:"n", pretty:"n = (PV)/(RT)", calc:(x)=> (x.P*x.V)/(R_ATM*x.T), outKind:"amount" },
+          { solveFor:"T", pretty:"T = (PV)/(nR)", calc:(x)=> (x.P*x.V)/(x.n*R_ATM), outKind:"temp" }
+        ]
+      },
+      {
+        id:"combined_gas",
+        title:"Combined Gas Law",
+        tag:"Gas Laws",
+        desc:"(P1V1)/T1 = (P2V2)/T2 (use K for temperatures).",
+        variables: [
+          { key:"P1", label:"P₁", kind:"pressure", baseUnit:"atm", outUnits:["atm","kPa","mmHg"] },
+          { key:"V1", label:"V₁", kind:"volume", baseUnit:"L", outUnits:["L","mL"] },
+          { key:"T1", label:"T₁", kind:"temp", baseUnit:"K", outUnits:["K","°C"] },
+          { key:"P2", label:"P₂", kind:"pressure", baseUnit:"atm", outUnits:["atm","kPa","mmHg"] },
+          { key:"V2", label:"V₂", kind:"volume", baseUnit:"L", outUnits:["L","mL"] },
+          { key:"T2", label:"T₂", kind:"temp", baseUnit:"K", outUnits:["K","°C"] }
+        ],
+        solveFor:["P2","V2","T2","P1","V1","T1"],
+        forms:[
+          { solveFor:"P2", pretty:"P₂ = (P₁V₁T₂)/(T₁V₂)", calc:(x)=> (x.P1*x.V1*x.T2)/(x.T1*x.V2), outKind:"pressure" },
+          { solveFor:"V2", pretty:"V₂ = (P₁V₁T₂)/(T₁P₂)", calc:(x)=> (x.P1*x.V1*x.T2)/(x.T1*x.P2), outKind:"volume" },
+          { solveFor:"T2", pretty:"T₂ = (P₂V₂T₁)/(P₁V₁)", calc:(x)=> (x.P2*x.V2*x.T1)/(x.P1*x.V1), outKind:"temp" },
+
+          { solveFor:"P1", pretty:"P₁ = (P₂V₂T₁)/(T₂V₁)", calc:(x)=> (x.P2*x.V2*x.T1)/(x.T2*x.V1), outKind:"pressure" },
+          { solveFor:"V1", pretty:"V₁ = (P₂V₂T₁)/(T₂P₁)", calc:(x)=> (x.P2*x.V2*x.T1)/(x.T2*x.P1), outKind:"volume" },
+          { solveFor:"T1", pretty:"T₁ = (P₁V₁T₂)/(P₂V₂)", calc:(x)=> (x.P1*x.V1*x.T2)/(x.P2*x.V2), outKind:"temp" }
+        ]
+      },
+      {
+        id:"dalton",
+        title:"Dalton’s Law + Mole Fraction",
+        tag:"Gas Mixtures",
+        desc:"Pᵢ = Xᵢ·Pₜₒₜ and Xᵢ = nᵢ/nₜₒₜ.",
+        variables: [
+          { key:"Pi", label:"Partial pressure (Pᵢ)", kind:"pressure", baseUnit:"atm", outUnits:["atm","kPa","mmHg"] },
+          { key:"Ptot", label:"Total pressure (Pₜₒₜ)", kind:"pressure", baseUnit:"atm", outUnits:["atm","kPa","mmHg"] },
+          { key:"Xi", label:"Mole fraction (Xᵢ)", kind:"unitless", baseUnit:"", outUnits:[""] }
+        ],
+        solveFor:["Pi","Ptot","Xi"],
+        forms:[
+          { solveFor:"Pi", pretty:"Pᵢ = Xᵢ·Pₜₒₜ", calc:(x)=> x.Xi*x.Ptot, outKind:"pressure" },
+          { solveFor:"Ptot", pretty:"Pₜₒₜ = Pᵢ / Xᵢ", calc:(x)=> x.Pi/x.Xi, outKind:"pressure" },
+          { solveFor:"Xi", pretty:"Xᵢ = Pᵢ / Pₜₒₜ", calc:(x)=> x.Pi/x.Ptot, outKind:"unitless" }
+        ]
+      },
+      {
+        id:"molarity",
+        title:"Molarity",
+        tag:"Solutions",
+        desc:"M = n/V (M in mol/L).",
+        variables: [
+          { key:"M", label:"Molarity (M)", kind:"molarity", baseUnit:"M", outUnits:["M","mM"] },
+          { key:"n", label:"Moles (n)", kind:"amount", baseUnit:"mol", outUnits:["mol","mmol"] },
+          { key:"V", label:"Volume (V)", kind:"volume", baseUnit:"L", outUnits:["L","mL"] }
+        ],
+        solveFor:["M","n","V"],
+        forms:[
+          { solveFor:"M", pretty:"M = n/V", calc:(x)=> x.n/x.V, outKind:"molarity" },
+          { solveFor:"n", pretty:"n = MV", calc:(x)=> x.M*x.V, outKind:"amount" },
+          { solveFor:"V", pretty:"V = n/M", calc:(x)=> x.n/x.M, outKind:"volume" }
+        ]
+      },
+      {
+        id:"dilution",
+        title:"Dilution",
+        tag:"Solutions",
+        desc:"M₁V₁ = M₂V₂ (assumes same solute moles).",
+        variables: [
+          { key:"M1", label:"M₁", kind:"molarity", baseUnit:"M", outUnits:["M","mM"] },
+          { key:"V1", label:"V₁", kind:"volume", baseUnit:"L", outUnits:["L","mL"] },
+          { key:"M2", label:"M₂", kind:"molarity", baseUnit:"M", outUnits:["M","mM"] },
+          { key:"V2", label:"V₂", kind:"volume", baseUnit:"L", outUnits:["L","mL"] }
+        ],
+        solveFor:["M1","V1","M2","V2"],
+        forms:[
+          { solveFor:"M2", pretty:"M₂ = (M₁V₁)/V₂", calc:(x)=> (x.M1*x.V1)/x.V2, outKind:"molarity" },
+          { solveFor:"V2", pretty:"V₂ = (M₁V₁)/M₂", calc:(x)=> (x.M1*x.V1)/x.M2, outKind:"volume" },
+          { solveFor:"M1", pretty:"M₁ = (M₂V₂)/V₁", calc:(x)=> (x.M2*x.V2)/x.V1, outKind:"molarity" },
+          { solveFor:"V1", pretty:"V₁ = (M₂V₂)/M₁", calc:(x)=> (x.M2*x.V2)/x.M1, outKind:"volume" }
+        ]
+      },
+      {
+        id:"density_mass_volume",
+        title:"Density / Mass / Volume",
+        tag:"Basics",
+        desc:"d = m/V (choose density units carefully). Base density here is g/L.",
+        variables: [
+          { key:"d", label:"Density (d)", kind:"density", baseUnit:"g/L", outUnits:["g/L","g/mL","kg/m³"] },
+          { key:"m", label:"Mass (m)", kind:"mass", baseUnit:"g", outUnits:["g","kg"] },
+          { key:"V", label:"Volume (V)", kind:"volume", baseUnit:"L", outUnits:["L","mL"] }
+        ],
+        solveFor:["d","m","V"],
+        forms:[
+          { solveFor:"d", pretty:"d = m/V", calc:(x)=> x.m/x.V, outKind:"density" },
+          { solveFor:"m", pretty:"m = dV", calc:(x)=> x.d*x.V, outKind:"mass" },
+          { solveFor:"V", pretty:"V = m/d", calc:(x)=> x.m/x.d, outKind:"volume" }
+        ]
+      },
+      {
+        id:"beer_lambert",
+        title:"Beer–Lambert Law",
+        tag:"Spectroscopy",
+        desc:"A = εℓc (A is absorbance, ℓ path length, c concentration). Units depend on ε.",
+        variables: [
+          { key:"A",   label:"Absorbance (A)", kind:"unitless", baseUnit:"", outUnits:[""] },
+          { key:"eps", label:"Molar absorptivity (ε)", kind:"epsilon", baseUnit:"", outUnits:[""] },
+          { key:"l",   label:"Path length (ℓ)", kind:"length", baseUnit:"cm", outUnits:["cm","mm","m"] },
+          { key:"c",   label:"Concentration (c)", kind:"molarity", baseUnit:"M", outUnits:["M","mM"] }
+        ],
+        solveFor:["A","eps","l","c"],
+        forms:[
+          { solveFor:"A",   pretty:"A = εℓc",   calc:(x)=> x.eps*x.l*x.c, outKind:"unitless" },
+          { solveFor:"eps", pretty:"ε = A/(ℓc)", calc:(x)=> x.A/(x.l*x.c), outKind:"epsilon" },
+          { solveFor:"l",   pretty:"ℓ = A/(εc)", calc:(x)=> x.A/(x.eps*x.c), outKind:"length" },
+          { solveFor:"c",   pretty:"c = A/(εℓ)", calc:(x)=> x.A/(x.eps*x.l), outKind:"molarity" }
+        ]
+      },
+      {
+        id:"calorimetry",
+        title:"Calorimetry (q = mCΔT)",
+        tag:"Thermochemistry",
+        desc:"q = m·C·ΔT. ΔT is a temperature change (°C or K are numerically the same for Δ).",
+        variables: [
+          { key:"q",  label:"Heat (q)", kind:"energy", baseUnit:"J", outUnits:["J","kJ"] },
+          { key:"m",  label:"Mass (m)", kind:"mass", baseUnit:"g", outUnits:["g","kg"] },
+          { key:"C",  label:"Specific heat (C)", kind:"heatcap", baseUnit:"J/g·°C", outUnits:["J/g·°C"] },
+          { key:"dT", label:"Temperature change (ΔT)", kind:"tempDelta", baseUnit:"°C", outUnits:["°C","K"] }
+        ],
+        solveFor:["q","m","C","dT"],
+        forms:[
+          { solveFor:"q",  pretty:"q = mCΔT",       calc:(x)=> x.m*x.C*x.dT, outKind:"energy" },
+          { solveFor:"m",  pretty:"m = q/(CΔT)",    calc:(x)=> x.q/(x.C*x.dT), outKind:"mass" },
+          { solveFor:"C",  pretty:"C = q/(mΔT)",    calc:(x)=> x.q/(x.m*x.dT), outKind:"heatcap" },
+          { solveFor:"dT", pretty:"ΔT = q/(mC)",    calc:(x)=> x.q/(x.m*x.C), outKind:"tempDelta" }
+        ]
+      },
+      {
+        id:"enthalpy",
+        title:"Reaction Heat (q = nΔH)",
+        tag:"Thermochemistry",
+        desc:"q = n·ΔH (common: ΔH in kJ/mol, q in kJ).",
+        variables: [
+          { key:"q",  label:"Heat (q)", kind:"energy", baseUnit:"J", outUnits:["J","kJ"] },
+          { key:"n",  label:"Moles (n)", kind:"amount", baseUnit:"mol", outUnits:["mol","mmol"] },
+          { key:"DH", label:"ΔH", kind:"enthalpy", baseUnit:"kJ/mol", outUnits:["kJ/mol","J/mol"] }
+        ],
+        solveFor:["q","n","DH"],
+        forms:[
+          // careful: DH base is kJ/mol, but q base is J. We'll convert inside.
+          { solveFor:"q",  pretty:"q = nΔH", calc:(x)=> x.n*(x.DH*1000), outKind:"energy" }, // kJ -> J
+          { solveFor:"n",  pretty:"n = q/ΔH", calc:(x)=> x.q/(x.DH*1000), outKind:"amount" },
+          { solveFor:"DH", pretty:"ΔH = q/n", calc:(x)=> (x.q/1000)/x.n, outKind:"enthalpy" } // return kJ/mol base
+        ]
+      }
+    ];
+
+    /**********************
+     * UI render
+     **********************/
+    const cardsEl = document.getElementById("cards");
+    const searchInput = document.getElementById("searchInput");
+    const sigSelect = document.getElementById("sigSelect");
+    const resetAllBtn = document.getElementById("resetAll");
+
+    const state = {
+      sig: Number(sigSelect.value),
+      perCard: {} // id -> { target, outUnit }
+    };
+
+    function defaultTarget(formula){
+      return formula.solveFor[0];
+    }
+
+    function getCardState(id, formula){
+      if(!state.perCard[id]){
+        // default output unit = base of solveFor variable (if exists)
+        const tgt = defaultTarget(formula);
+        const varDef = formula.variables.find(v => v.key === tgt);
+        const outUnit = varDef?.outUnits?.[0] ?? (BASE[tgt]?.unit ?? "");
+        state.perCard[id] = { target: tgt, outUnit };
+      }
+      return state.perCard[id];
+    }
+
+    function setCardState(id, patch){
+      state.perCard[id] = { ...(state.perCard[id]||{}), ...patch };
+      render();
+    }
+
+    function makeEl(tag, attrs={}, children=[]){
+      const el = document.createElement(tag);
+      for(const [k,v] of Object.entries(attrs)){
+        if(k === "class") el.className = v;
+        else if(k.startsWith("on") && typeof v === "function") el.addEventListener(k.slice(2), v);
+        else if(k === "html") el.innerHTML = v;
+        else el.setAttribute(k, v);
+      }
+      for(const c of children){
+        if(c == null) continue;
+        if(typeof c === "string") el.appendChild(document.createTextNode(c));
+        else el.appendChild(c);
+      }
+      return el;
+    }
+
+    function varLabelWithUnit(v){
+      const u = v.baseUnit ? `(${v.baseUnit})` : "";
+      return `${v.label} ${u}`.trim();
+    }
+
+    function compute(formula, target, inputsRaw, outUnit){
+      const form = formula.forms.find(f => f.solveFor === target);
+      if(!form) return { ok:false, status:"bad", msg:"No rearrangement found." };
+
+      // Build required variables list: all variables for this formula except target
+      const required = formula.variables.map(v => v.key).filter(k => k !== target);
+
+      // Parse inputs
+      const parsed = {};
+      const notes = [];
+      for(const key of required){
+        const vdef = formula.variables.find(v => v.key === key);
+        const raw = (inputsRaw[key] ?? "").trim();
+        if(!raw) return { ok:false, status:"warn", msg:`Missing ${vdef?.label || key}.` };
+
+        const pn = parseNumberAndUnit(raw);
+        if(!pn.ok) return { ok:false, status:"bad", msg:`Could not parse ${vdef?.label || key}.` };
+
+        // If no unit, assume base unit for that variable kind.
+        const unit = pn.unit || (vdef?.baseUnit || "");
+        const conv = toBase(vdef.kind, pn.num, unit);
+        if(!conv.ok) return { ok:false, status:"bad", msg:`${vdef?.label || key}: ${conv.msg}` };
+        parsed[key] = conv.val;
+        if(conv.note) notes.push(`${vdef?.label || key}: ${conv.note}`);
+      }
+
+      // also parse target if needed for certain solveFor? Not needed.
+      // Provide constants: for any formula, allow direct "R" not as input. (We handle internally.)
+
+      // Run calc
+      let val;
+      try{
+        val = form.calc(parsed);
+      }catch(e){
+        return { ok:false, status:"bad", msg:"Calculation error. Check your inputs." };
+      }
+      if(!Number.isFinite(val)) return { ok:false, status:"bad", msg:"Result is not finite. Check for divide-by-zero or missing values." };
+
+      val = clampNice(val);
+
+      // Determine output kind/unit
+      const targetVar = formula.variables.find(v => v.key === target);
+      const outKind = form.outKind || targetVar?.kind || "unitless";
+
+      // Some special: tempDelta: show °C by default
+      let outUnitUse = outUnit;
+      if(!outUnitUse){
+        outUnitUse = targetVar?.outUnits?.[0] ?? (BASE[target]?.unit ?? "");
+      }
+
+      let converted = { ok:true, val, unit: targetVar?.baseUnit ?? "" };
+      if(outKind === "tempDelta"){
+        // ΔT: allow "°C" or "K" same number
+        converted = { ok:true, val, unit: outUnitUse || "°C" };
+      } else if(outKind === "heatcap"){
+        // keep as-is
+        converted = { ok:true, val, unit: "J/g·°C" };
+      } else {
+        // Convert from base (for outKind) into chosen output unit (if any)
+        // Note: for some variables (unitless/epsilon) this is no-op.
+        converted = fromBase(outKind, val, outUnitUse);
+        if(!converted.ok) return { ok:false, status:"bad", msg: converted.msg };
+      }
+
+      // Temperature add-on display (if output temp)
+      let extra = "";
+      if(outKind === "temp"){
+        if((outUnitUse||"").toLowerCase().includes("k")){
+          // also show °C
+          const c = fromBase("temp", val, "°C");
+          if(c.ok) extra = ` (${sigFormat(c.val, state.sig)} °C)`;
+        }else if((outUnitUse||"").toLowerCase().includes("c")){
+          const k = fromBase("temp", val, "K");
+          if(k.ok) extra = ` (${sigFormat(k.val, state.sig)} K)`;
+        }
+      }
+
+      return {
+        ok:true,
+        status:"good",
+        pretty: form.pretty,
+        value: converted.val,
+        unit: converted.unit || outUnitUse || "",
+        extra,
+        notes
+      };
+    }
+
+    function render(){
+      cardsEl.innerHTML = "";
+
+      const q = (searchInput.value || "").trim().toLowerCase();
+      const list = formulas.filter(f => {
+        if(!q) return true;
+        const hay = `${f.title} ${f.tag} ${f.desc} ${f.forms.map(x=>x.pretty).join(" ")}`.toLowerCase();
+        return hay.includes(q);
+      });
+
+      if(list.length === 0){
+        cardsEl.appendChild(
+          makeEl("div", { class:"card" }, [
+            makeEl("div", { class:"cardHead" }, [
+              makeEl("div", { class:"meta" }, [
+                makeEl("h3", {}, ["No matches"]),
+                makeEl("p", {}, ["Try a broader search like “gas”, “solutions”, or “q”."])
+              ])
+            ])
+          ])
+        );
+        return;
+      }
+
+      for(const f of list){
+        const cs = getCardState(f.id, f);
+        const target = cs.target;
+        const targetVar = f.variables.find(v => v.key === target);
+
+        // build input values cache in DOM dataset? We’ll store in state.perCardInputs
+        const inputStateKey = `${f.id}__inputs`;
+        if(!state[inputStateKey]) state[inputStateKey] = {};
+
+        // Determine output unit options
+        const outUnits = targetVar?.outUnits?.length ? targetVar.outUnits : [""];
+
+        // compute result
+        const result = compute(f, target, state[inputStateKey], cs.outUnit);
+
+        const card = makeEl("article", { class:"card", "data-id":f.id }, [
+          makeEl("div", { class:"cardHead" }, [
+            makeEl("div", { class:"meta" }, [
+              makeEl("h3", {}, [
+                f.title,
+                makeEl("span", { class:"tag" }, [f.tag])
+              ]),
+              makeEl("p", {}, [f.desc])
+            ]),
+            makeEl("div", { class:"actions" }, [
+              // Solve-for segmented buttons
+              makeEl("div", { class:"seg", role:"group", "aria-label":`Solve for options for ${f.title}` }, [
+                ...f.solveFor.map(k => {
+                  const b = makeEl("button", {
+                    type:"button",
+                    class: k===target ? "active" : "",
+                    onclick: () => {
+                      // update target and output unit default
+                      const nv = f.variables.find(v => v.key === k);
+                      setCardState(f.id, { target:k, outUnit: nv?.outUnits?.[0] ?? "" });
+                    }
+                  }, [`${k}`]);
+                  return b;
+                })
+              ]),
+              // Output unit selector
+              makeEl("div", {}, [
+                makeEl("select", {
+                  "aria-label": `Output unit for ${f.title}`,
+                  onchange: (e)=> setCardState(f.id, { outUnit: e.target.value })
+                }, outUnits.map(u => {
+                  const opt = document.createElement("option");
+                  opt.value = u;
+                  opt.textContent = u || "(unitless)";
+                  if((cs.outUnit || outUnits[0]) === u) opt.selected = true;
+                  return opt;
+                }))
+              ]),
+              makeEl("button", {
+                type:"button",
+                class:"ghost",
+                onclick: ()=> {
+                  state[inputStateKey] = {};
+                  render();
+                }
+              }, ["Clear"])
+            ])
+          ]),
+          makeEl("div", { class:"body" }, [
+            // Inputs
+            makeEl("div", { class:"inputs" }, [
+              makeEl("div", { class:"row" }, f.variables
+                .filter(v => v.key !== target)
+                .map(v => {
+                  const val = state[inputStateKey][v.key] ?? "";
+                  const ph = placeholderFor(v);
+                  const unitHint = v.outUnits?.length ? v.outUnits.join(", ") : (v.baseUnit || "");
+                  return makeEl("div", { class:"field" }, [
+                    makeEl("label", { for:`${f.id}_${v.key}` }, [
+                      makeEl("span", {}, [v.label]),
+                      makeEl("span", { class:"u" }, [unitHint])
+                    ]),
+                    makeEl("input", {
+                      id:`${f.id}_${v.key}`,
+                      type:"text",
+                      inputmode:"decimal",
+                      value: val,
+                      placeholder: ph,
+                      oninput: (e)=> {
+                        state[inputStateKey][v.key] = e.target.value;
+                        // live update without full re-render? We'll re-render for simplicity.
+                        render();
+                      }
+                    })
+                  ]);
+                })
+              ),
+              makeEl("div", { class:"helper" }, [
+                "Examples: ",
+                makeEl("span", { class:"chip" }, ["101.3 kPa"]),
+                makeEl("span", { class:"chip" }, ["760 mmHg"]),
+                makeEl("span", { class:"chip" }, ["250 mL"]),
+                makeEl("span", { class:"chip" }, ["25 C"]),
+                makeEl("span", { class:"chip" }, ["0.500 mol"]),
+                makeEl("div", { style:"margin-top:8px" }, [
+                  "Tip: For temperatures in gas laws, enter ",
+                  makeEl("span", { class:"chip" }, ["K"]),
+                  " or use ",
+                  makeEl("span", { class:"chip" }, ["C"]),
+                  " and it will convert."
+                ])
+              ])
+            ]),
+
+            // Output
+            makeEl("div", { class:"output" }, [
+              makeEl("div", { class:"big" }, [
+                makeEl("div", { class:"lhs" }, [
+                  makeEl("div", { class:"k" }, [`Solving for ${targetVar?.label || target}`]),
+                  makeEl("div", { class:"v", id:`${f.id}_out` }, [
+                    result.ok
+                      ? `${sigFormat(result.value, state.sig)} ${result.unit}${result.extra || ""}`.trim()
+                      : "—"
+                  ])
+                ]),
+                makeEl("button", {
+                  type:"button",
+                  class:"primary",
+                  onclick: async ()=> {
+                    const txt = result.ok
+                      ? `${targetVar?.label || target}: ${sigFormat(result.value, state.sig)} ${result.unit}${result.extra || ""}`.trim()
+                      : "No result to copy.";
+                    await safeCopy(txt);
+                    toast("Copied.");
+                  }
+                }, ["Copy"])
+              ]),
+
+              makeEl("div", { class:`status ${result.ok ? (result.status||"good") : (result.status||"bad")}` }, [
+                result.ok
+                  ? (result.notes?.length
+                      ? `OK. ${result.notes.join(" • ")}`
+                      : "OK. Enter/adjust values to update instantly.")
+                  : (result.msg || "Check your inputs.")
+              ]),
+
+              makeEl("div", { class:"eq" }, [
+                makeEl("div", { class:"pretty" }, [
+                  result.ok ? result.pretty : "Rearrangement will appear here once inputs are valid."
+                ]),
+                makeEl("button", {
+                  type:"button",
+                  onclick: async ()=> {
+                    const txt = result.ok ? result.pretty : "";
+                    if(!txt){ toast("Nothing to copy."); return; }
+                    await safeCopy(txt);
+                    toast("Copied formula.");
+                  }
+                }, ["Copy"])
+              ]),
+
+              makeEl("details", {}, [
+                makeEl("summary", {}, [
+                  makeEl("span", {}, ["All rearrangements"]),
+                  makeEl("span", { style:"color:rgba(234,241,255,.75); font-family:var(--mono); font-size:11px" }, [
+                    `${f.forms.length} forms`
+                  ])
+                ]),
+                makeEl("div", { class:"inside" }, [
+                  makeEl("div", { class:"forms" }, f.forms.map(frm => {
+                    return makeEl("div", { class:"eq" }, [
+                      makeEl("div", { class:"pretty" }, [frm.pretty]),
+                      makeEl("button", {
+                        type:"button",
+                        onclick: async ()=> {
+                          await safeCopy(frm.pretty);
+                          toast("Copied.");
+                        }
+                      }, ["Copy"])
+                    ]);
+                  }))
+                ])
+              ])
+            ])
+          ])
+        ]);
+
+        cardsEl.appendChild(card);
+      }
+    }
+
+    function placeholderFor(v){
+      // sensible placeholders per kind
+      const k = v.kind;
+      if(k === "pressure") return "e.g., 1.00 atm or 101.3 kPa";
+      if(k === "volume") return "e.g., 2.50 L or 250 mL";
+      if(k === "temp") return "e.g., 298 K or 25 C";
+      if(k === "amount") return "e.g., 0.500 mol";
+      if(k === "molarity") return "e.g., 0.200 M";
+      if(k === "mass") return "e.g., 10.0 g";
+      if(k === "density") return "e.g., 1.25 g/mL";
+      if(k === "length") return "e.g., 1.00 cm";
+      if(k === "energy") return "e.g., 1250 J or 1.25 kJ";
+      if(k === "enthalpy") return "e.g., -57.2 kJ/mol";
+      if(k === "heatcap") return "e.g., 4.184 J/gC";
+      if(k === "tempDelta") return "e.g., 12.5 C";
+      if(k === "unitless") return "e.g., 0.250";
+      if(k === "epsilon") return "e.g., 1.45e4";
+      return "e.g., 1.00";
+    }
+
+    async function safeCopy(text){
+      try{
+        await navigator.clipboard.writeText(text);
+      }catch{
+        // fallback
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+      }
+    }
+
+    // tiny toast
+    let toastTimer = null;
+    function toast(msg){
+      let el = document.getElementById("toast");
+      if(!el){
+        el = document.createElement("div");
+        el.id = "toast";
+        el.style.position = "fixed";
+        el.style.left = "50%";
+        el.style.bottom = "18px";
+        el.style.transform = "translateX(-50%)";
+        el.style.padding = "10px 12px";
+        el.style.borderRadius = "12px";
+        el.style.border = "1px solid rgba(255,255,255,.14)";
+        el.style.background = "rgba(10,18,34,.92)";
+        el.style.color = "rgba(234,241,255,.92)";
+        el.style.boxShadow = "0 16px 34px rgba(0,0,0,.45)";
+        el.style.zIndex = "99";
+        el.style.fontSize = "13px";
+        el.style.backdropFilter = "blur(8px)";
+        document.body.appendChild(el);
+      }
+      el.textContent = msg;
+      el.style.opacity = "1";
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=>{ el.style.opacity="0"; }, 1200);
+    }
+
+    // Events
+    searchInput.addEventListener("input", render);
+    sigSelect.addEventListener("change", ()=>{ state.sig = Number(sigSelect.value); render(); });
+    resetAllBtn.addEventListener("click", ()=>{
+      // Clear all card input states + perCard states
+      for(const k of Object.keys(state)){
+        if(k.endsWith("__inputs")) delete state[k];
+      }
+      state.perCard = {};
+      render();
+      toast("Reset.");
+    });
+
+    // Initial render
+    render();
+  </script>
+</body>
+</html>
