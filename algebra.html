@@ -38,13 +38,8 @@
       color:var(--text);
     }
     a{color:inherit;text-decoration:none}
-    .app{
-      display:grid;
-      grid-template-columns: 270px 1fr;
-      min-height:100vh;
-    }
+    .app{display:grid; grid-template-columns:270px 1fr; min-height:100vh;}
 
-    /* Sidebar */
     .side{
       border-right:1px solid var(--line);
       background: linear-gradient(180deg, rgba(15,26,47,.92), rgba(9,16,30,.92));
@@ -63,12 +58,10 @@
       width:38px; height:38px; border-radius:12px;
       background: radial-gradient(circle at 30% 30%, rgba(87,160,255,.95), rgba(45,125,255,.35) 60%, rgba(45,125,255,.12) 100%);
       border:1px solid rgba(255,255,255,.14);
-      position:relative;
-      overflow:hidden;
+      position:relative; overflow:hidden;
     }
     .logo:after{
-      content:"";
-      position:absolute; inset:-40%;
+      content:""; position:absolute; inset:-40%;
       background: conic-gradient(from 180deg, transparent, rgba(255,255,255,.25), transparent 55%);
       animation: spin 5.5s linear infinite;
     }
@@ -76,17 +69,13 @@
     .brand h1{font-size:14px; margin:0; letter-spacing:.3px}
     .brand p{margin:2px 0 0 0; color:var(--muted2); font-size:12px}
 
-    .nav{
-      margin-top:14px;
-      display:flex; flex-direction:column; gap:8px;
-    }
+    .nav{margin-top:14px; display:flex; flex-direction:column; gap:8px;}
     .nav a{
       display:flex; align-items:center; gap:10px;
       padding:10px 12px;
       border-radius: 12px;
       border:1px solid transparent;
       color: var(--muted);
-      background: transparent;
       transition:.15s ease;
     }
     .nav a:hover{background: rgba(255,255,255,.04); color:var(--text); border-color: var(--line)}
@@ -104,7 +93,6 @@
       background: var(--blue2);
       box-shadow: 0 0 0 3px rgba(87,160,255,.18);
     }
-
     .side .hint{
       margin-top:14px;
       padding:12px;
@@ -128,9 +116,7 @@
       margin:0 2px;
     }
 
-    /* Main */
     .main{ padding: 18px 18px 28px 18px; }
-
     .topbar{
       display:flex; gap:12px; align-items:center; justify-content:space-between;
       padding: 14px 16px;
@@ -144,9 +130,7 @@
     .title{display:flex; flex-direction:column; gap:2px;}
     .title h2{margin:0; font-size:16px; letter-spacing:.2px}
     .title span{color:var(--muted2); font-size:12px}
-    .controls{
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;
-    }
+    .controls{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;}
     .search{
       display:flex; align-items:center; gap:10px;
       padding:10px 12px;
@@ -155,11 +139,7 @@
       background: rgba(0,0,0,.18);
       min-width: 280px;
     }
-    .search input{
-      width:100%;
-      border:none; outline:none; background:transparent;
-      color:var(--text); font-size:13px;
-    }
+    .search input{width:100%; border:none; outline:none; background:transparent; color:var(--text); font-size:13px;}
     .pill{
       display:flex; align-items:center; gap:10px;
       padding:10px 12px;
@@ -191,34 +171,12 @@
       user-select:none;
     }
     button:hover{border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.06)}
-    button.primary{
-      border-color: rgba(45,125,255,.40);
-      background: linear-gradient(90deg, rgba(45,125,255,.30), rgba(45,125,255,.10));
-    }
-    button.primary:hover{border-color: rgba(87,160,255,.55)}
-    button.ghost{ background: transparent; }
     button.bad{
       border-color: rgba(255,92,119,.35);
       background: rgba(255,92,119,.10);
     }
-    button.mini{
-      padding:6px 8px;
-      border-radius: 10px;
-      font-size:12px;
-    }
-    button.mini.blue{
-      border-color: rgba(87,160,255,.40);
-      background: rgba(87,160,255,.10);
-    }
-    button.mini.blue:hover{border-color: rgba(87,160,255,.60); background: rgba(87,160,255,.14)}
 
-    .grid{
-      margin-top:16px;
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-    }
-
+    .grid{margin-top:16px; display:grid; grid-template-columns: repeat(12, 1fr); gap: 14px;}
     .card{
       grid-column: span 12;
       border:1px solid var(--line);
@@ -233,14 +191,8 @@
       border-bottom:1px solid var(--line);
       background: rgba(255,255,255,.02);
     }
-    .cardHead .meta{
-      display:flex; flex-direction:column; gap:4px;
-      min-width: 220px;
-    }
-    .cardHead .meta h3{
-      margin:0; font-size:15px; letter-spacing:.2px;
-      display:flex; align-items:center; gap:10px;
-    }
+    .cardHead .meta{display:flex; flex-direction:column; gap:4px; min-width:220px;}
+    .cardHead .meta h3{margin:0; font-size:15px; letter-spacing:.2px; display:flex; align-items:center; gap:10px;}
     .tag{
       font-size:11px;
       padding:2px 8px;
@@ -250,10 +202,7 @@
       background: rgba(45,125,255,.12);
     }
     .cardHead .meta p{margin:0; color:var(--muted2); font-size:12px; line-height:1.35}
-
-    .cardHead .actions{
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;
-    }
+    .cardHead .actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end;}
     .seg{
       display:flex;
       border:1px solid var(--line);
@@ -262,18 +211,16 @@
       overflow:hidden;
     }
     .seg button{
-      border:none;
-      border-right:1px solid var(--line);
+      border:none; border-right:1px solid var(--line);
       border-radius: 0;
       padding:9px 10px;
       background: transparent;
       color: var(--muted);
+      cursor:pointer;
     }
     .seg button:last-child{border-right:none}
-    .seg button.active{
-      background: rgba(45,125,255,.20);
-      color: var(--text);
-    }
+    .seg button.active{background: rgba(45,125,255,.20); color: var(--text);}
+
     .body{
       padding: 14px 16px 16px 16px;
       display:grid;
@@ -295,24 +242,15 @@
       background: rgba(0,0,0,.14);
       padding: 12px;
     }
-    .inputs .row{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .field{ display:flex; flex-direction:column; gap:6px; }
+    .inputs .row{display:grid; grid-template-columns: 1fr 1fr; gap: 10px;}
+    @media (max-width: 620px){ .inputs .row{grid-template-columns:1fr;} }
+
+    .field{display:flex; flex-direction:column; gap:6px;}
     .field label{
       font-size:12px; color: var(--muted);
-      display:flex; justify-content:space-between; gap:10px;
-      align-items:center;
+      display:flex; justify-content:space-between; gap:10px; align-items:center;
     }
     .field label .u{color:var(--muted2); font-family:var(--mono); font-size:11px}
-    .field label .lblLeft{
-      display:flex; align-items:center; gap:8px; min-width:0;
-    }
-    .field label .lblBtns{
-      display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end;
-    }
     .field input{
       border:1px solid var(--line);
       background: rgba(255,255,255,.03);
@@ -324,29 +262,37 @@
       font-family: var(--mono);
     }
     .field input:focus{border-color: rgba(87,160,255,.55)}
-    .field input:disabled{
-      opacity:.55;
-      cursor:not-allowed;
-      border-color: rgba(255,255,255,.08);
-      background: rgba(255,255,255,.02);
-    }
+    .field input:disabled{opacity:.55; cursor:not-allowed;}
 
-    .helper{
-      font-size:12px; color: var(--muted2);
-      margin-top:10px;
-      line-height:1.45;
-    }
-    .helper .chip{
-      display:inline-flex; align-items:center; gap:6px;
-      padding:2px 8px;
-      border-radius: 999px;
+    .output{
       border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      margin: 2px 6px 2px 0;
-      font-family: var(--mono);
-      font-size:11px;
-      color: var(--muted);
+      border-radius: var(--radius2);
+      background: rgba(0,0,0,.14);
+      padding: 12px;
+      display:flex; flex-direction:column; gap:10px;
     }
+    .big{
+      display:flex; align-items:baseline; justify-content:space-between; gap:10px;
+      padding: 12px;
+      border-radius: 14px;
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(45,125,255,.16), rgba(0,0,0,.14));
+    }
+    .big .lhs{display:flex; flex-direction:column; gap:4px}
+    .big .lhs .k{color:var(--muted2); font-size:12px}
+    .big .lhs .v{font-family: var(--mono); font-size: 18px; letter-spacing: .2px; word-break: break-word;}
+    .status{
+      font-size:12px;
+      padding:8px 10px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      color: var(--muted);
+      background: rgba(255,255,255,.03);
+      line-height:1.35;
+    }
+    .status.good{border-color: rgba(53,208,127,.35); background: rgba(53,208,127,.10); color: rgba(216,255,234,.92)}
+    .status.bad{border-color: rgba(255,92,119,.40); background: rgba(255,92,119,.10); color: rgba(255,220,226,.92)}
+    .status.warn{border-color: rgba(255,204,102,.40); background: rgba(255,204,102,.10); color: rgba(255,242,216,.92)}
 
     details{
       border:1px solid var(--line);
@@ -365,57 +311,6 @@
     }
     details summary::-webkit-details-marker{display:none}
     details .inside{padding: 10px 12px 12px 12px; border-top:1px solid var(--line)}
-
-    .lockGrid{
-      display:grid;
-      grid-template-columns: 1fr 1.2fr auto;
-      gap:10px;
-      align-items:end;
-    }
-    @media (max-width: 620px){
-      .lockGrid{grid-template-columns: 1fr;}
-    }
-    .lockGrid .miniLab{
-      font-size:12px; color:var(--muted2);
-      margin-bottom:6px;
-    }
-
-    .output{
-      border:1px solid var(--line);
-      border-radius: var(--radius2);
-      background: rgba(0,0,0,.14);
-      padding: 12px;
-      display:flex; flex-direction:column; gap:10px;
-    }
-    .big{
-      display:flex; align-items:baseline; justify-content:space-between; gap:10px;
-      padding: 12px;
-      border-radius: 14px;
-      border:1px solid var(--line);
-      background: linear-gradient(180deg, rgba(45,125,255,.16), rgba(0,0,0,.14));
-    }
-    .big .lhs{display:flex; flex-direction:column; gap:4px}
-    .big .lhs .k{color:var(--muted2); font-size:12px}
-    .big .lhs .v{
-      font-family: var(--mono);
-      font-size: 18px;
-      letter-spacing: .2px;
-      word-break: break-word;
-    }
-
-    .status{
-      font-size:12px;
-      padding:8px 10px;
-      border-radius: 12px;
-      border:1px solid var(--line);
-      color: var(--muted);
-      background: rgba(255,255,255,.03);
-      line-height:1.35;
-    }
-    .status.good{border-color: rgba(53,208,127,.35); background: rgba(53,208,127,.10); color: rgba(216,255,234,.92)}
-    .status.warn{border-color: rgba(255,204,102,.40); background: rgba(255,204,102,.10); color: rgba(255,242,216,.92)}
-    .status.bad{border-color: rgba(255,92,119,.40); background: rgba(255,92,119,.10); color: rgba(255,220,226,.92)}
-
     .eq{
       border:1px solid var(--line);
       border-radius: var(--radius2);
@@ -427,15 +322,8 @@
       color: rgba(234,241,255,.92);
     }
     .eq .pretty{white-space:nowrap; overflow:auto}
-    .eq button{
-      padding:7px 10px;
-      border-radius: 10px;
-      font-size:12px;
-    }
-    .forms{
-      display:flex; flex-direction:column; gap:8px;
-    }
-
+    .eq button{padding:7px 10px; border-radius: 10px; font-size:12px;}
+    .forms{display:flex; flex-direction:column; gap:8px;}
     .footerNote{
       margin-top:14px;
       color: var(--muted2);
@@ -468,6 +356,10 @@
           <span class="dot" aria-hidden="true"></span>
           <span>Formula Solver</span>
         </a>
+        <a href="thermo.html?v=1">
+          <span class="dot" aria-hidden="true"></span>
+          <span>Thermo</span>
+        </a>
       </nav>
 
       <div class="hint">
@@ -481,13 +373,7 @@
           <span class="kbd">250 mL</span>
           <span class="kbd">3.0 L</span>
         </div>
-        <div style="margin-top:10px">
-          Bare numbers default to the card’s base units (atm, L, mol, K, etc.).
-        </div>
-        <div style="margin-top:10px">
-          <span style="color:rgba(234,241,255,.92); font-weight:600;">New:</span>
-          lock a variable to a constant (like <span class="kbd">P = 1 atm</span>) in any card.
-        </div>
+        <div style="margin-top:10px">Bare numbers default to the card’s base units (atm, L, mol, K, etc.).</div>
       </div>
     </aside>
 
@@ -518,8 +404,8 @@
       <section class="grid" id="cards"></section>
 
       <div class="footerNote">
-        <b>Note:</b> This page shows the <i>one</i> rearrangement you need for the chosen target.
-        “All rearrangements” stays collapsible so it never becomes a wall of math.
+        <b>Note:</b> Choose a target variable, then fill in the other fields.
+        Units are optional (defaults to the card’s base units).
       </div>
     </main>
   </div>
@@ -557,49 +443,9 @@
         if(u==="c" || u==="degc" || u==="celsius") return { ok:true, val:v + 273.15, unit:"K", note:"converted from °C to K" };
         return bad();
       }
-      if(kind === "tempDelta"){
-        if(!u || u==="c" || u==="k" || u==="degc") return { ok:true, val:v, unit:"°C" };
-        return bad();
-      }
-      if(kind === "mass"){
-        if(!u || u==="g") return { ok:true, val:v, unit:"g" };
-        if(u==="kg") return { ok:true, val:v*1000, unit:"g" };
-        return bad();
-      }
-      if(kind === "length"){
-        if(!u || u==="cm") return { ok:true, val:v, unit:"cm" };
-        if(u==="m") return { ok:true, val:v*100, unit:"cm" };
-        if(u==="mm") return { ok:true, val:v/10, unit:"cm" };
-        return bad();
-      }
-      if(kind === "energy"){
-        if(!u || u==="j") return { ok:true, val:v, unit:"J" };
-        if(u==="kj") return { ok:true, val:v*1000, unit:"J" };
-        return bad();
-      }
-      if(kind === "enthalpy"){
-        if(!u || u==="kj/mol" || u==="kjpermol") return { ok:true, val:v, unit:"kJ/mol" };
-        if(u==="j/mol" || u==="jpermol") return { ok:true, val:v/1000, unit:"kJ/mol" };
-        return bad();
-      }
       if(kind === "molarity"){
         if(!u || u==="m" || u==="mol/l" || u==="molperliter") return { ok:true, val:v, unit:"M" };
         if(u==="mm" || u==="mmolar" || u==="mmol/l") return { ok:true, val:v/1000, unit:"M" };
-        return bad();
-      }
-      if(kind === "density"){
-        if(!u || u==="g/l" || u==="gperl") return { ok:true, val:v, unit:"g/L" };
-        if(u==="g/ml") return { ok:true, val:v*1000, unit:"g/L" };
-        if(u==="kg/m3" || u==="kg/m^3") return { ok:true, val:v, unit:"g/L" };
-        return bad();
-      }
-      if(kind === "heatcap"){
-        if(!u || u==="j/gc" || u==="j/gk" || u==="j/(gc)" || u==="j/(g*c)" || u==="j/(gk)") return { ok:true, val:v, unit:"J/g·°C" };
-        return bad();
-      }
-      if(kind === "molarmass"){
-        if(!u || u==="g/mol" || u==="gpermol") return { ok:true, val:v, unit:"g/mol" };
-        if(u==="kg/mol") return { ok:true, val:v*1000, unit:"g/mol" };
         return bad();
       }
       return bad();
@@ -632,41 +478,9 @@
         if(u==="c") return { ok:true, val:v - 273.15, unit:"°C" };
         return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
       }
-      if(kind === "mass"){
-        if(!u || u==="g") return { ok:true, val:v, unit:"g" };
-        if(u==="kg") return { ok:true, val:v/1000, unit:"kg" };
-        return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
-      }
-      if(kind === "energy"){
-        if(!u || u==="j") return { ok:true, val:v, unit:"J" };
-        if(u==="kj") return { ok:true, val:v/1000, unit:"kJ" };
-        return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
-      }
       if(kind === "molarity"){
         if(!u || u==="m") return { ok:true, val:v, unit:"M" };
         if(u==="mm") return { ok:true, val:v*1000, unit:"mM" };
-        return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
-      }
-      if(kind === "density"){
-        if(!u || u==="g/l") return { ok:true, val:v, unit:"g/L" };
-        if(u==="g/ml") return { ok:true, val:v/1000, unit:"g/mL" };
-        if(u==="kg/m3" || u==="kg/m^3") return { ok:true, val:v, unit:"kg/m³" };
-        return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
-      }
-      if(kind === "enthalpy"){
-        if(!u || u==="kj/mol") return { ok:true, val:v, unit:"kJ/mol" };
-        if(u==="j/mol") return { ok:true, val:v*1000, unit:"J/mol" };
-        return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
-      }
-      if(kind === "length"){
-        if(!u || u==="cm") return { ok:true, val:v, unit:"cm" };
-        if(u==="m") return { ok:true, val:v/100, unit:"m" };
-        if(u==="mm") return { ok:true, val:v*10, unit:"mm" };
-        return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
-      }
-      if(kind === "molarmass"){
-        if(!u || u==="g/mol") return { ok:true, val:v, unit:"g/mol" };
-        if(u==="kg/mol") return { ok:true, val:v/1000, unit:"kg/mol" };
         return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
       }
       return { ok:false, msg:`Unsupported output unit "${outUnitRaw}"` };
@@ -701,7 +515,7 @@
         id:"ideal_gas",
         title:"Ideal Gas Law",
         tag:"Gas Laws",
-        desc:"PV = nRT (base: atm, L, mol, K). You can lock any variable (e.g., balloon: P = air pressure).",
+        desc:"PV = nRT (base: atm, L, mol, K).",
         variables: [
           { key:"P", label:"Pressure (P)", kind:"pressure", baseUnit:"atm", outUnits:["atm","kPa","mmHg"] },
           { key:"V", label:"Volume (V)", kind:"volume", baseUnit:"L", outUnits:["L","mL"] },
@@ -709,9 +523,7 @@
           { key:"T", label:"Temperature (T)", kind:"temp", baseUnit:"K", outUnits:["K","°C"] }
         ],
         solveFor:["P","V","n","T"],
-        constants:[
-          { key:"R", label:"Gas constant (R)", default: R_ATM_DEFAULT, note:"L·atm/(mol·K)" }
-        ],
+        constants:[ { key:"R", label:"Gas constant (R)", default: R_ATM_DEFAULT, note:"L·atm/(mol·K)" } ],
         forms:[
           { solveFor:"P", pretty:"P = (nRT)/V", calc:(x)=> (x.n*x.R*x.T)/x.V, outKind:"pressure" },
           { solveFor:"V", pretty:"V = (nRT)/P", calc:(x)=> (x.n*x.R*x.T)/x.P, outKind:"volume" },
@@ -720,12 +532,11 @@
         ]
       },
 
-      /* ✅ ADDED: Boyle's Law */
       {
         id:"boyles",
         title:"Boyle’s Law",
         tag:"Gas Laws",
-        desc:"P₁V₁ = P₂V₂ (T and n constant). Lock anything held constant (or just solve directly).",
+        desc:"P₁V₁ = P₂V₂ (T and n constant).",
         variables: [
           { key:"P1", label:"P₁", kind:"pressure", baseUnit:"atm", outUnits:["atm","kPa","mmHg"] },
           { key:"V1", label:"V₁", kind:"volume", baseUnit:"L", outUnits:["L","mL"] },
@@ -741,12 +552,11 @@
         ]
       },
 
-      /* ✅ ADDED: Amontons's (Gay-Lussac's) Law */
       {
         id:"amontons",
         title:"Amontons’s Law (P–T)",
         tag:"Gas Laws",
-        desc:"P₁/T₁ = P₂/T₂ (V and n constant). Use K for temperatures (or type °C then click C → K).",
+        desc:"P₁/T₁ = P₂/T₂ (V and n constant).",
         variables: [
           { key:"P1", label:"P₁", kind:"pressure", baseUnit:"atm", outUnits:["atm","kPa","mmHg"] },
           { key:"T1", label:"T₁", kind:"temp", baseUnit:"K", outUnits:["K","°C"] },
@@ -762,12 +572,11 @@
         ]
       },
 
-      /* ✅ ADDED: Avogadro's Law */
       {
         id:"avogadro",
         title:"Avogadro’s Law",
         tag:"Gas Laws",
-        desc:"V₁/n₁ = V₂/n₂ (P and T constant). Lock any constant values if needed.",
+        desc:"V₁/n₁ = V₂/n₂ (P and T constant).",
         variables: [
           { key:"V1", label:"V₁", kind:"volume", baseUnit:"L", outUnits:["L","mL"] },
           { key:"n1", label:"n₁", kind:"amount", baseUnit:"mol", outUnits:["mol","mmol"] },
@@ -787,7 +596,7 @@
         id:"combined_gas",
         title:"Combined Gas Law",
         tag:"Gas Laws",
-        desc:"(P1V1)/T1 = (P2V2)/T2 (use K for temps). Lock variables if a pressure/volume/temperature is held constant.",
+        desc:"(P₁V₁)/T₁ = (P₂V₂)/T₂ (use K for temps).",
         variables: [
           { key:"P1", label:"P₁", kind:"pressure", baseUnit:"atm", outUnits:["atm","kPa","mmHg"] },
           { key:"V1", label:"V₁", kind:"volume", baseUnit:"L", outUnits:["L","mL"] },
@@ -806,50 +615,17 @@
           { solveFor:"T1", pretty:"T₁ = (P₁V₁T₂)/(P₂V₂)", calc:(x)=> (x.P1*x.V1*x.T2)/(x.P2*x.V2), outKind:"temp" }
         ]
       },
-      {
-        id:"dalton",
-        title:"Dalton’s Law + Mole Fraction",
-        tag:"Gas Mixtures",
-        desc:"Pᵢ = Xᵢ·Pₜₒₜ and Xᵢ = Pᵢ/Pₜₒₜ. Lock a known value (e.g., Ptot constant).",
-        variables: [
-          { key:"Pi", label:"Partial pressure (Pᵢ)", kind:"pressure", baseUnit:"atm", outUnits:["atm","kPa","mmHg"] },
-          { key:"Ptot", label:"Total pressure (Pₜₒₜ)", kind:"pressure", baseUnit:"atm", outUnits:["atm","kPa","mmHg"] },
-          { key:"Xi", label:"Mole fraction (Xᵢ)", kind:"unitless", baseUnit:"", outUnits:[""] }
-        ],
-        solveFor:["Pi","Ptot","Xi"],
-        forms:[
-          { solveFor:"Pi", pretty:"Pᵢ = Xᵢ·Pₜₒₜ", calc:(x)=> x.Xi*x.Ptot, outKind:"pressure" },
-          { solveFor:"Ptot", pretty:"Pₜₒₜ = Pᵢ / Xᵢ", calc:(x)=> x.Pi/x.Xi, outKind:"pressure" },
-          { solveFor:"Xi", pretty:"Xᵢ = Pᵢ / Pₜₒₜ", calc:(x)=> x.Pi/x.Ptot, outKind:"unitless" }
-        ]
-      },
-      {
-        id:"molarity",
-        title:"Molarity",
-        tag:"Solutions",
-        desc:"M = n/V (M in mol/L). Lock a constant (e.g., V fixed).",
-        variables: [
-          { key:"M", label:"Molarity (M)", kind:"molarity", baseUnit:"M", outUnits:["M","mM"] },
-          { key:"n", label:"Moles (n)", kind:"amount", baseUnit:"mol", outUnits:["mol","mmol"] },
-          { key:"V", label:"Volume (V)", kind:"volume", baseUnit:"L", outUnits:["L","mL"] }
-        ],
-        solveFor:["M","n","V"],
-        forms:[
-          { solveFor:"M", pretty:"M = n/V", calc:(x)=> x.n/x.V, outKind:"molarity" },
-          { solveFor:"n", pretty:"n = MV", calc:(x)=> x.M*x.V, outKind:"amount" },
-          { solveFor:"V", pretty:"V = n/M", calc:(x)=> x.n/x.M, outKind:"volume" }
-        ]
-      },
+
       {
         id:"dilution",
         title:"Dilution",
         tag:"Solutions",
-        desc:"M₁V₁ = M₂V₂. Lock any variable if it’s fixed/known.",
-        variables: [
-          { key:"M1", label:"M₁", kind:"molarity", baseUnit:"M", outUnits:["M","mM"] },
-          { key:"V1", label:"V₁", kind:"volume", baseUnit:"L", outUnits:["L","mL"] },
-          { key:"M2", label:"M₂", kind:"molarity", baseUnit:"M", outUnits:["M","mM"] },
-          { key:"V2", label:"V₂", kind:"volume", baseUnit:"L", outUnits:["L","mL"] }
+        desc:"M₁V₁ = M₂V₂ (base: M, L).",
+        variables:[
+          { key:"M1", label:"M₁ (initial molarity)", kind:"molarity", baseUnit:"M", outUnits:["M","mM"] },
+          { key:"V1", label:"V₁ (initial volume)", kind:"volume", baseUnit:"L", outUnits:["L","mL"] },
+          { key:"M2", label:"M₂ (final molarity)", kind:"molarity", baseUnit:"M", outUnits:["M","mM"] },
+          { key:"V2", label:"V₂ (final volume)", kind:"volume", baseUnit:"L", outUnits:["L","mL"] }
         ],
         solveFor:["M1","V1","M2","V2"],
         forms:[
@@ -858,707 +634,341 @@
           { solveFor:"M1", pretty:"M₁ = (M₂V₂)/V₁", calc:(x)=> (x.M2*x.V2)/x.V1, outKind:"molarity" },
           { solveFor:"V1", pretty:"V₁ = (M₂V₂)/M₁", calc:(x)=> (x.M2*x.V2)/x.M1, outKind:"volume" }
         ]
-      },
-      {
-        id:"density_mass_volume",
-        title:"Density / Mass / Volume",
-        tag:"Basics",
-        desc:"d = m/V (density base is g/L). Lock any value if needed.",
-        variables: [
-          { key:"d", label:"Density (d)", kind:"density", baseUnit:"g/L", outUnits:["g/L","g/mL","kg/m³"] },
-          { key:"m", label:"Mass (m)", kind:"mass", baseUnit:"g", outUnits:["g","kg"] },
-          { key:"V", label:"Volume (V)", kind:"volume", baseUnit:"L", outUnits:["L","mL"] }
-        ],
-        solveFor:["d","m","V"],
-        forms:[
-          { solveFor:"d", pretty:"d = m/V", calc:(x)=> x.m/x.V, outKind:"density" },
-          { solveFor:"m", pretty:"m = dV", calc:(x)=> x.d*x.V, outKind:"mass" },
-          { solveFor:"V", pretty:"V = m/d", calc:(x)=> x.m/x.d, outKind:"volume" }
-        ]
-      },
-      {
-        id:"beer_lambert",
-        title:"Beer–Lambert Law",
-        tag:"Spectroscopy",
-        desc:"A = εℓc. Units depend on ε; lock any constant value if needed.",
-        variables: [
-          { key:"A",   label:"Absorbance (A)", kind:"unitless", baseUnit:"", outUnits:[""] },
-          { key:"eps", label:"Molar absorptivity (ε)", kind:"epsilon", baseUnit:"", outUnits:[""] },
-          { key:"l",   label:"Path length (ℓ)", kind:"length", baseUnit:"cm", outUnits:["cm","mm","m"] },
-          { key:"c",   label:"Concentration (c)", kind:"molarity", baseUnit:"M", outUnits:["M","mM"] }
-        ],
-        solveFor:["A","eps","l","c"],
-        forms:[
-          { solveFor:"A",   pretty:"A = εℓc",    calc:(x)=> x.eps*x.l*x.c, outKind:"unitless" },
-          { solveFor:"eps", pretty:"ε = A/(ℓc)", calc:(x)=> x.A/(x.l*x.c), outKind:"epsilon" },
-          { solveFor:"l",   pretty:"ℓ = A/(εc)", calc:(x)=> x.A/(x.eps*x.c), outKind:"length" },
-          { solveFor:"c",   pretty:"c = A/(εℓ)", calc:(x)=> x.A/(x.eps*x.l), outKind:"molarity" }
-        ]
-      },
-      {
-        id:"calorimetry",
-        title:"Calorimetry (q = mCΔT)",
-        tag:"Thermochemistry",
-        desc:"q = m·C·ΔT. ΔT is a change (°C or K same magnitude). Lock constants as needed.",
-        variables: [
-          { key:"q",  label:"Heat (q)", kind:"energy", baseUnit:"J", outUnits:["J","kJ"] },
-          { key:"m",  label:"Mass (m)", kind:"mass", baseUnit:"g", outUnits:["g","kg"] },
-          { key:"C",  label:"Specific heat (C)", kind:"heatcap", baseUnit:"J/g·°C", outUnits:["J/g·°C"] },
-          { key:"dT", label:"Temperature change (ΔT)", kind:"tempDelta", baseUnit:"°C", outUnits:["°C","K"] }
-        ],
-        solveFor:["q","m","C","dT"],
-        forms:[
-          { solveFor:"q",  pretty:"q = mCΔT",     calc:(x)=> x.m*x.C*x.dT, outKind:"energy" },
-          { solveFor:"m",  pretty:"m = q/(CΔT)",  calc:(x)=> x.q/(x.C*x.dT), outKind:"mass" },
-          { solveFor:"C",  pretty:"C = q/(mΔT)",  calc:(x)=> x.q/(x.m*x.dT), outKind:"heatcap" },
-          { solveFor:"dT", pretty:"ΔT = q/(mC)",  calc:(x)=> x.q/(x.m*x.C), outKind:"tempDelta" }
-        ]
-      },
-      {
-        id:"enthalpy",
-        title:"Reaction Heat (q = nΔH)",
-        tag:"Thermochemistry",
-        desc:"q = n·ΔH (ΔH often in kJ/mol). Lock constants if needed.",
-        variables: [
-          { key:"q",  label:"Heat (q)", kind:"energy", baseUnit:"J", outUnits:["J","kJ"] },
-          { key:"n",  label:"Moles (n)", kind:"amount", baseUnit:"mol", outUnits:["mol","mmol"] },
-          { key:"DH", label:"ΔH", kind:"enthalpy", baseUnit:"kJ/mol", outUnits:["kJ/mol","J/mol"] }
-        ],
-        solveFor:["q","n","DH"],
-        forms:[
-          { solveFor:"q",  pretty:"q = nΔH",   calc:(x)=> x.n*(x.DH*1000), outKind:"energy" },
-          { solveFor:"n",  pretty:"n = q/ΔH",  calc:(x)=> x.q/(x.DH*1000), outKind:"amount" },
-          { solveFor:"DH", pretty:"ΔH = q/n",  calc:(x)=> (x.q/1000)/x.n, outKind:"enthalpy" }
-        ]
       }
     ];
 
     /**********************
-     * State
+     * UI build
      **********************/
-    const cardsEl = document.getElementById("cards");
-    const searchInput = document.getElementById("searchInput");
-    const sigSelect = document.getElementById("sigSelect");
-    const resetAllBtn = document.getElementById("resetAll");
+    const $cards = document.getElementById("cards");
+    const $search = document.getElementById("searchInput");
+    const $sig = document.getElementById("sigSelect");
+    const $reset = document.getElementById("resetAll");
 
-    const state = {
-      sig: Number(sigSelect.value),
-      perCard: {},            // id -> { target, outUnit, locks:[{varKey,valRaw}] , consts:{R:...} }
-      perCardInputs: {}       // id -> { varKey: raw string }
-    };
+    function esc(s){
+      return (s ?? "").toString()
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#39;");
+    }
 
-    function defaultTarget(formula){ return formula.solveFor[0]; }
+    function makeFieldHTML(f, idx, fid){
+      return `
+        <div class="field">
+          <label for="${fid}">
+            <span class="lblLeft">${esc(f.label)} <span class="u">${esc(f.baseUnit || "")}</span></span>
+          </label>
+          <input id="${fid}" data-k="${esc(f.key)}" data-kind="${esc(f.kind)}" data-baseunit="${esc(f.baseUnit||"")}" inputmode="decimal" placeholder="${esc(f.baseUnit||"")}" />
+        </div>
+      `;
+    }
 
-    function getCardState(id, formula){
-      if(!state.perCard[id]){
-        const tgt = defaultTarget(formula);
-        const varDef = formula.variables.find(v => v.key === tgt);
-        const outUnit = varDef?.outUnits?.[0] ?? "";
-        const consts = {};
-        (formula.constants || []).forEach(c => { consts[c.key] = String(c.default); });
-        state.perCard[id] = { target:tgt, outUnit, locks:[], consts };
+    function buildCard(formula){
+      const segBtns = formula.solveFor.map((k,i)=>`<button type="button" class="${i===0?"active":""}" data-target="${esc(k)}">${esc(k)}</button>`).join("");
+      const leftFields = formula.variables.map((v,i)=>makeFieldHTML(v,i, `${formula.id}__${v.key}`)).join("");
+
+      const constHTML = (formula.constants && formula.constants.length)
+        ? `<details open>
+            <summary><span>Constants</span><span style="opacity:.7">▼</span></summary>
+            <div class="inside">
+              ${formula.constants.map(c=>`
+                <div class="field" style="margin-top:8px">
+                  <label><span class="lblLeft">${esc(c.label)} <span class="u">${esc(c.note||"")}</span></span></label>
+                  <input data-const="${esc(c.key)}" value="${esc(c.default)}" inputmode="decimal" />
+                </div>
+              `).join("")}
+            </div>
+          </details>`
+        : "";
+
+      return `
+        <article class="card" data-id="${esc(formula.id)}" data-title="${esc(formula.title)}" data-tag="${esc(formula.tag)}">
+          <div class="cardHead">
+            <div class="meta">
+              <h3>${esc(formula.title)} <span class="tag">${esc(formula.tag)}</span></h3>
+              <p>${esc(formula.desc)}</p>
+            </div>
+            <div class="actions">
+              <div class="seg" role="tablist" aria-label="Solve for">
+                ${segBtns}
+              </div>
+            </div>
+          </div>
+
+          <div class="body">
+            <div>
+              <div class="inputs">
+                <div class="row">
+                  ${leftFields}
+                </div>
+                ${constHTML}
+              </div>
+            </div>
+
+            <div class="output">
+              <div class="big">
+                <div class="lhs">
+                  <div class="k">Answer</div>
+                  <div class="v" data-out>—</div>
+                </div>
+                <div style="display:flex; gap:8px; align-items:center;">
+                  <button type="button" data-calc>Calculate</button>
+                  <button type="button" data-clear class="bad">Clear</button>
+                </div>
+              </div>
+
+              <div class="status" data-status>Choose a target, fill other fields, then Calculate.</div>
+
+              <details>
+                <summary><span>All rearrangements</span><span style="opacity:.7">▼</span></summary>
+                <div class="inside forms">
+                  ${formula.forms.map(f=>`
+                    <div class="eq">
+                      <div class="pretty">${esc(f.pretty)}</div>
+                      <button type="button" class="mini" data-copy="${esc(f.pretty)}">Copy</button>
+                    </div>
+                  `).join("")}
+                </div>
+              </details>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function render(list){
+      $cards.innerHTML = list.map(buildCard).join("");
+      wireAll();
+    }
+
+    function getTarget(card){
+      const btn = card.querySelector(".seg button.active");
+      return btn ? btn.getAttribute("data-target") : null;
+    }
+
+    function setTarget(card, key){
+      card.querySelectorAll(".seg button").forEach(b=>{
+        b.classList.toggle("active", b.getAttribute("data-target") === key);
+      });
+      compute(card, true);
+    }
+
+    function readValue(field){
+      const key = field.getAttribute("data-k");
+      const kind = field.getAttribute("data-kind");
+      const baseUnit = field.getAttribute("data-baseunit") || "";
+      const raw = field.value.trim();
+      if(!raw) return { ok:false, key, kind, msg:"Missing" };
+      const p = parseNumberAndUnit(raw);
+      if(!p.ok) return { ok:false, key, kind, msg:p.msg };
+      const tb = toBase(kind, p.num, p.unit || baseUnit);
+      if(!tb.ok) return { ok:false, key, kind, msg:tb.msg };
+      return { ok:true, key, kind, val:tb.val };
+    }
+
+    function compute(card, quiet){
+      const id = card.getAttribute("data-id");
+      const formula = formulas.find(f=>f.id===id);
+      const target = getTarget(card);
+
+      const status = card.querySelector("[data-status]");
+      const out = card.querySelector("[data-out]");
+      const sig = Number($sig.value || 3);
+
+      if(!formula || !target){
+        if(!quiet) status.textContent = "Missing formula/target.";
+        return;
       }
-      if(!state.perCardInputs[id]) state.perCardInputs[id] = {};
-      return state.perCard[id];
-    }
 
-    function setCardState(id, patch){
-      state.perCard[id] = { ...(state.perCard[id]||{}), ...patch };
-      renderPreserveFocus();
-    }
-    function setCardInputs(id, patch){
-      state.perCardInputs[id] = { ...(state.perCardInputs[id]||{}), ...patch };
-      renderPreserveFocus();
-    }
+      // build x object
+      const x = {};
+      // constants
+      (formula.constants || []).forEach(c=>{
+        const inp = card.querySelector(`[data-const="${c.key}"]`);
+        const num = Number((inp?.value ?? c.default));
+        x[c.key] = Number.isFinite(num) ? num : c.default;
+      });
 
-    /**********************
-     * Focus-preserving re-render
-     * (Fixes "typing kicks you out" bug)
-     **********************/
-    function renderPreserveFocus(){
-      const active = document.activeElement;
-      const activeId = active && active.id ? active.id : null;
-      const selStart = (active && typeof active.selectionStart === "number") ? active.selectionStart : null;
-      const selEnd   = (active && typeof active.selectionEnd === "number") ? active.selectionEnd : null;
+      // variables
+      const vars = formula.variables;
+      const results = [];
+      vars.forEach(v=>{
+        const field = card.querySelector(`#${CSS.escape(formula.id+"__"+v.key)}`);
+        if(!field) return;
+        if(v.key === target) return;
+        if(v.key === target) return;
 
-      render();
-
-      if(activeId){
-        const el = document.getElementById(activeId);
-        if(el){
-          el.focus({ preventScroll:true });
-          try{
-            if(selStart !== null && selEnd !== null && typeof el.setSelectionRange === "function"){
-              el.setSelectionRange(selStart, selEnd);
-            }
-          }catch{}
+        const rv = readValue(field);
+        if(!rv.ok){
+          results.push(rv);
+        }else{
+          x[v.key] = rv.val;
         }
+      });
+
+      // Ensure all required (non-target) vars exist
+      const needed = formula.variables
+        .map(v=>v.key)
+        .filter(k=>k !== target);
+
+      const missing = needed.filter(k => !(k in x));
+      if(missing.length){
+        out.textContent = "—";
+        status.className = "status warn";
+        status.textContent = `Missing: ${missing.join(", ")} (enter those to solve for ${target}).`;
+        return;
       }
-    }
 
-    /**********************
-     * Helpers
-     **********************/
-    function makeEl(tag, attrs={}, children=[]){
-      const el = document.createElement(tag);
-      for(const [k,v] of Object.entries(attrs)){
-        if(k === "class") el.className = v;
-        else if(k === "html") el.innerHTML = v;
-        else if(k.startsWith("on") && typeof v === "function") el.addEventListener(k.slice(2), v);
-        else if(v === false || v == null) {/* ignore */}
-        else el.setAttribute(k, v === true ? "" : String(v));
+      // Find selected rearrangement
+      const form = (formula.forms || []).find(fr => fr.solveFor === target);
+      if(!form){
+        out.textContent = "—";
+        status.className = "status bad";
+        status.textContent = `No rearrangement found for ${target}.`;
+        return;
       }
-      for(const c of children){
-        if(c == null) continue;
-        if(typeof c === "string") el.appendChild(document.createTextNode(c));
-        else el.appendChild(c);
-      }
-      return el;
-    }
 
-    function placeholderFor(v){
-      const k = v.kind;
-      if(k === "pressure") return "e.g., 1.00 atm or 101.3 kPa";
-      if(k === "volume") return "e.g., 2.50 L or 250 mL";
-      if(k === "temp") return "e.g., 298 K or 25 C";
-      if(k === "amount") return "e.g., 0.500 mol";
-      if(k === "molarity") return "e.g., 0.200 M";
-      if(k === "mass") return "e.g., 10.0 g";
-      if(k === "density") return "e.g., 1.25 g/mL";
-      if(k === "length") return "e.g., 1.00 cm";
-      if(k === "energy") return "e.g., 1250 J or 1.25 kJ";
-      if(k === "enthalpy") return "e.g., -57.2 kJ/mol";
-      if(k === "heatcap") return "e.g., 4.184 J/gC";
-      if(k === "tempDelta") return "e.g., 12.5 C";
-      if(k === "unitless") return "e.g., 0.250";
-      if(k === "epsilon") return "e.g., 1.45e4";
-      return "e.g., 1.00";
-    }
-
-    function lockValueFor(cardState, varKey){
-      const lock = (cardState.locks || []).find(x => x.varKey === varKey);
-      return lock ? lock.valRaw : "";
-    }
-
-    function isLocked(cardState, varKey){
-      return !!(cardState.locks || []).find(x => x.varKey === varKey);
-    }
-
-    function setLock(cardId, formula, varKey, valRaw){
-      const cs = getCardState(cardId, formula);
-      const locks = [...(cs.locks || [])].filter(x => x.varKey !== varKey);
-      if(varKey && valRaw && valRaw.trim()){
-        locks.push({ varKey, valRaw: valRaw.trim() });
-      }
-      setCardState(cardId, { locks });
-    }
-
-    function clearLocks(cardId){
-      const cs = state.perCard[cardId];
-      if(!cs) return;
-      setCardState(cardId, { locks: [] });
-    }
-
-    function convertCtoKInInput(cardId, varKey){
-      const raw = (state.perCardInputs[cardId]?.[varKey] ?? "").trim();
-      if(!raw) return;
-      const pn = parseNumberAndUnit(raw);
-      if(!pn.ok) return;
-
-      // If unit missing, assume Celsius for this button
-      const unit = pn.unit ? pn.unit : "C";
-      const conv = toBase("temp", pn.num, unit);
-      if(!conv.ok) return;
-
-      const kVal = conv.val;
-      const kStr = `${stripTrailingZeros(kVal)} K`;
-      setCardInputs(cardId, { [varKey]: kStr });
-      toast("Converted to K");
-    }
-
-    function stripTrailingZeros(num){
-      if(!Number.isFinite(num)) return String(num);
-      // show up to 6 decimals, trim
-      const s = num.toFixed(6).replace(/\.?0+$/, "");
-      return s;
-    }
-
-    async function safeCopy(text){
+      // Compute
+      let ans;
       try{
-        await navigator.clipboard.writeText(text);
-      }catch{
+        ans = form.calc(x);
+      }catch(e){
+        out.textContent = "—";
+        status.className = "status bad";
+        status.textContent = `Calculation failed: ${(e && e.message) ? e.message : "error"}`;
+        return;
+      }
+
+      if(!Number.isFinite(ans)){
+        out.textContent = "—";
+        status.className = "status bad";
+        status.textContent = "Result is not finite (check for divide-by-zero or missing values).";
+        return;
+      }
+
+      ans = clampNice(ans);
+
+      // Output unit + formatting
+      const targetVar = formula.variables.find(v=>v.key===target);
+      const unit = targetVar?.baseUnit || "";
+      out.textContent = `${sigFormat(ans, sig)} ${unit}`.trim();
+
+      status.className = "status good";
+      status.textContent = `Using: ${form.pretty}`;
+    }
+
+    function clearCard(card){
+      card.querySelectorAll("input[data-k]").forEach(inp=> inp.value = "");
+      card.querySelectorAll("[data-out]").forEach(o=> o.textContent = "—");
+      const st = card.querySelector("[data-status]");
+      if(st){
+        st.className = "status";
+        st.textContent = "Choose a target, fill other fields, then Calculate.";
+      }
+    }
+
+    function copyText(t){
+      const text = (t ?? "").toString();
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).catch(()=>{});
+      }else{
         const ta = document.createElement("textarea");
         ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
         document.body.appendChild(ta);
         ta.select();
-        document.execCommand("copy");
+        try{ document.execCommand("copy"); }catch(e){}
         ta.remove();
       }
     }
 
-    // toast
-    let toastTimer = null;
-    function toast(msg){
-      let el = document.getElementById("toast");
-      if(!el){
-        el = document.createElement("div");
-        el.id = "toast";
-        el.style.position = "fixed";
-        el.style.left = "50%";
-        el.style.bottom = "18px";
-        el.style.transform = "translateX(-50%)";
-        el.style.padding = "10px 12px";
-        el.style.borderRadius = "12px";
-        el.style.border = "1px solid rgba(255,255,255,.14)";
-        el.style.background = "rgba(10,18,34,.92)";
-        el.style.color = "rgba(234,241,255,.92)";
-        el.style.boxShadow = "0 16px 34px rgba(0,0,0,.45)";
-        el.style.zIndex = "99";
-        el.style.fontSize = "13px";
-        el.style.backdropFilter = "blur(8px)";
-        document.body.appendChild(el);
-      }
-      el.textContent = msg;
-      el.style.opacity = "1";
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(()=>{ el.style.opacity="0"; }, 1200);
-    }
+    function wireAll(){
+      document.querySelectorAll(".card").forEach(card=>{
+        // Solve-for segment buttons
+        card.querySelectorAll(".seg button").forEach(btn=>{
+          btn.addEventListener("click", ()=>{
+            setTarget(card, btn.getAttribute("data-target"));
+          });
+        });
 
-    /**********************
-     * Compute
-     **********************/
-    function compute(formula, cardState, inputsRaw){
-      const target = cardState.target;
-      const outUnit = cardState.outUnit;
-
-      const form = formula.forms.find(f => f.solveFor === target);
-      if(!form) return { ok:false, status:"bad", msg:"No rearrangement found." };
-
-      const required = formula.variables.map(v => v.key).filter(k => k !== target);
-
-      const parsed = {};
-      const notes = [];
-
-      // constants (e.g., R)
-      for(const c of (formula.constants || [])){
-        const rawC = (cardState.consts?.[c.key] ?? "").trim();
-        const num = Number(String(rawC).replaceAll(",", ""));
-        if(!Number.isFinite(num)){
-          return { ok:false, status:"bad", msg:`Constant ${c.key} is invalid.` };
-        }
-        parsed[c.key] = num;
-      }
-
-      // locked vars override required inputs
-      for(const key of required){
-        const vdef = formula.variables.find(v => v.key === key);
-        const lockedRaw = lockValueFor(cardState, key);
-
-        const raw = (lockedRaw ? lockedRaw : (inputsRaw[key] ?? "")).trim();
-        if(!raw){
-          return { ok:false, status:"warn", msg:`Missing ${vdef?.label || key}.` };
+        // Calculate
+        const calcBtn = card.querySelector("[data-calc]");
+        if(calcBtn){
+          calcBtn.addEventListener("click", ()=> compute(card, false));
         }
 
-        const pn = parseNumberAndUnit(raw);
-        if(!pn.ok){
-          return { ok:false, status:"bad", msg:`Could not parse ${vdef?.label || key}.` };
+        // Clear
+        const clrBtn = card.querySelector("[data-clear]");
+        if(clrBtn){
+          clrBtn.addEventListener("click", ()=> clearCard(card));
         }
 
-        const unit = pn.unit || (vdef?.baseUnit || "");
-        const conv = toBase(vdef.kind, pn.num, unit);
-        if(!conv.ok) return { ok:false, status:"bad", msg:`${vdef?.label || key}: ${conv.msg}` };
+        // Inputs: Enter triggers calculate; typing updates (quiet)
+        card.querySelectorAll("input[data-k]").forEach(inp=>{
+          inp.addEventListener("keydown", (e)=>{
+            if(e.key === "Enter"){
+              e.preventDefault();
+              compute(card, false);
+            }
+          });
+          inp.addEventListener("input", ()=> compute(card, true));
+        });
 
-        parsed[key] = conv.val;
-        if(conv.note) notes.push(`${vdef?.label || key}: ${conv.note}`);
-        if(lockedRaw) notes.push(`${vdef?.label || key} locked to ${raw}`);
-      }
+        // Constants: typing updates (quiet)
+        card.querySelectorAll("input[data-const]").forEach(inp=>{
+          inp.addEventListener("input", ()=> compute(card, true));
+          inp.addEventListener("keydown", (e)=>{
+            if(e.key === "Enter"){
+              e.preventDefault();
+              compute(card, false);
+            }
+          });
+        });
 
-      let val;
-      try{
-        val = form.calc(parsed);
-      }catch{
-        return { ok:false, status:"bad", msg:"Calculation error. Check your inputs." };
-      }
-      if(!Number.isFinite(val)) return { ok:false, status:"bad", msg:"Result is not finite. Check for divide-by-zero." };
-
-      val = clampNice(val);
-
-      const targetVar = formula.variables.find(v => v.key === target);
-      const outKind = form.outKind || targetVar?.kind || "unitless";
-
-      let outUnitUse = outUnit || targetVar?.outUnits?.[0] || "";
-
-      let converted;
-      if(outKind === "tempDelta"){
-        converted = { ok:true, val, unit: outUnitUse || "°C" };
-      }else if(outKind === "heatcap"){
-        converted = { ok:true, val, unit: "J/g·°C" };
-      }else{
-        converted = fromBase(outKind, val, outUnitUse);
-        if(!converted.ok) return { ok:false, status:"bad", msg: converted.msg };
-      }
-
-      let extra = "";
-      if(outKind === "temp"){
-        if((outUnitUse||"").toLowerCase().includes("k")){
-          const c = fromBase("temp", val, "°C");
-          if(c.ok) extra = ` (${sigFormat(c.val, state.sig)} °C)`;
-        }else if((outUnitUse||"").toLowerCase().includes("c")){
-          const k = fromBase("temp", val, "K");
-          if(k.ok) extra = ` (${sigFormat(k.val, state.sig)} K)`;
-        }
-      }
-
-      return { ok:true, status:"good", pretty: form.pretty, value: converted.val, unit: converted.unit || outUnitUse || "", extra, notes };
-    }
-
-    /**********************
-     * Render
-     **********************/
-    function render(){
-      cardsEl.innerHTML = "";
-      const q = (searchInput.value || "").trim().toLowerCase();
-
-      const list = formulas.filter(f => {
-        if(!q) return true;
-        const hay = `${f.title} ${f.tag} ${f.desc} ${f.forms.map(x=>x.pretty).join(" ")}`.toLowerCase();
-        return hay.includes(q);
+        // Copy equation
+        card.querySelectorAll("[data-copy]").forEach(btn=>{
+          btn.addEventListener("click", ()=>{
+            const eq = btn.getAttribute("data-copy") || "";
+            copyText(eq);
+            btn.textContent = "Copied";
+            setTimeout(()=> btn.textContent = "Copy", 900);
+          });
+        });
       });
-
-      if(list.length === 0){
-        cardsEl.appendChild(
-          makeEl("div", { class:"card" }, [
-            makeEl("div", { class:"cardHead" }, [
-              makeEl("div", { class:"meta" }, [
-                makeEl("h3", {}, ["No matches"]),
-                makeEl("p", {}, ["Try a broader search like “gas”, “solutions”, or “q”."])
-              ])
-            ])
-          ])
-        );
-        return;
-      }
-
-      for(const f of list){
-        const cs = getCardState(f.id, f);
-        const inputs = state.perCardInputs[f.id] || {};
-        const target = cs.target;
-        const targetVar = f.variables.find(v => v.key === target);
-        const outUnits = targetVar?.outUnits?.length ? targetVar.outUnits : [""];
-
-        const result = compute(f, cs, inputs);
-
-        // Locks UI options: any variable except target
-        const lockableVars = f.variables.filter(v => v.key !== target);
-
-        // card
-        const card = makeEl("article", { class:"card", "data-id":f.id }, [
-          makeEl("div", { class:"cardHead" }, [
-            makeEl("div", { class:"meta" }, [
-              makeEl("h3", {}, [ f.title, makeEl("span", { class:"tag" }, [f.tag]) ]),
-              makeEl("p", {}, [f.desc])
-            ]),
-            makeEl("div", { class:"actions" }, [
-              makeEl("div", { class:"seg", role:"group", "aria-label":`Solve for options for ${f.title}` }, [
-                ...f.solveFor.map(k => makeEl("button", {
-                  type:"button",
-                  class: k===target ? "active" : "",
-                  onclick: () => {
-                    const nv = f.variables.find(v => v.key === k);
-                    setCardState(f.id, { target:k, outUnit: nv?.outUnits?.[0] ?? "" });
-                    // also drop locks that reference the new target (since target won't be an input anymore)
-                    const cur = getCardState(f.id, f);
-                    const cleanedLocks = (cur.locks||[]).filter(L => L.varKey !== k);
-                    state.perCard[f.id].locks = cleanedLocks;
-                  }
-                }, [k]))
-              ]),
-              makeEl("select", {
-                "aria-label": `Output unit for ${f.title}`,
-                onchange: (e)=> setCardState(f.id, { outUnit: e.target.value })
-              }, outUnits.map(u => {
-                const opt = document.createElement("option");
-                opt.value = u;
-                opt.textContent = u || "(unitless)";
-                if((cs.outUnit || outUnits[0]) === u) opt.selected = true;
-                return opt;
-              })),
-              makeEl("button", {
-                type:"button",
-                class:"ghost",
-                onclick: ()=> {
-                  state.perCardInputs[f.id] = {};
-                  const cur = getCardState(f.id, f);
-                  // keep solve target/unit but clear locks
-                  state.perCard[f.id] = { ...cur, locks: [] };
-                  renderPreserveFocus();
-                }
-              }, ["Clear"])
-            ])
-          ]),
-
-          makeEl("div", { class:"body" }, [
-            // Inputs
-            makeEl("div", { class:"inputs" }, [
-              makeEl("div", { class:"row" }, lockableVars.map(v => {
-                const locked = isLocked(cs, v.key);
-                const val = inputs[v.key] ?? "";
-                const ph = placeholderFor(v);
-                const unitHint = v.outUnits?.length ? v.outUnits.join(", ") : (v.baseUnit || "");
-
-                const labelLeft = makeEl("span", { class:"lblLeft" }, [v.label]);
-                const labelBtns = makeEl("span", { class:"lblBtns" }, []);
-
-                // Celsius -> Kelvin button for temperature inputs
-                if(v.kind === "temp"){
-                  labelBtns.appendChild(makeEl("button", {
-                    type:"button",
-                    class:"mini blue",
-                    title:"Convert Celsius to Kelvin",
-                    onclick: ()=> convertCtoKInInput(f.id, v.key)
-                  }, ["C → K"]));
-                }
-
-                // quick unlock button if locked
-                if(locked){
-                  labelBtns.appendChild(makeEl("button", {
-                    type:"button",
-                    class:"mini",
-                    title:"Unlock this variable",
-                    onclick: ()=> {
-                      const newLocks = (cs.locks||[]).filter(L => L.varKey !== v.key);
-                      setCardState(f.id, { locks: newLocks });
-                    }
-                  }, ["Unlock"]));
-                }
-
-                return makeEl("div", { class:"field" }, [
-                  makeEl("label", { for:`${f.id}_${v.key}` }, [
-                    labelLeft,
-                    makeEl("span", { class:"u" }, [unitHint]),
-                    labelBtns
-                  ]),
-                  makeEl("input", {
-                    id:`${f.id}_${v.key}`,
-                    type:"text",
-                    inputmode:"decimal",
-                    placeholder: ph,
-                    value: locked ? lockValueFor(cs, v.key) : val,
-                    disabled: locked,
-                    oninput: (e)=> {
-                      setCardInputs(f.id, { [v.key]: e.target.value });
-                    }
-                  })
-                ]);
-              })),
-
-              // Constants (like R) - if formula has constants
-              (f.constants && f.constants.length)
-                ? makeEl("details", { open:true }, [
-                    makeEl("summary", {}, [
-                      makeEl("span", {}, ["Constants"]),
-                      makeEl("span", { style:"color:rgba(234,241,255,.75); font-family:var(--mono); font-size:11px" }, [
-                        `${f.constants.length} const`
-                      ])
-                    ]),
-                    makeEl("div", { class:"inside" }, [
-                      ...f.constants.map(c => {
-                        const cid = `${f.id}__const__${c.key}`;
-                        return makeEl("div", { class:"field" }, [
-                          makeEl("label", { for:cid }, [
-                            makeEl("span", {}, [`${c.label}`]),
-                            makeEl("span", { class:"u" }, [c.note || ""])
-                          ]),
-                          makeEl("input", {
-                            id: cid,
-                            type:"text",
-                            inputmode:"decimal",
-                            value: cs.consts?.[c.key] ?? String(c.default),
-                            placeholder: String(c.default),
-                            oninput: (e)=> {
-                              const cur = getCardState(f.id, f);
-                              const consts = { ...(cur.consts||{}), [c.key]: e.target.value };
-                              setCardState(f.id, { consts });
-                            }
-                          })
-                        ]);
-                      })
-                    ])
-                  ])
-                : null,
-
-              // Locks: universal "assumption / constant" system
-              makeEl("details", {}, [
-                makeEl("summary", {}, [
-                  makeEl("span", {}, ["Assumptions / Constants (Locks)"]),
-                  makeEl("span", { style:"color:rgba(234,241,255,.75); font-family:var(--mono); font-size:11px" }, [
-                    `${(cs.locks||[]).length} locked`
-                  ])
-                ]),
-                makeEl("div", { class:"inside" }, [
-                  makeEl("div", { class:"helper", style:"margin-top:0" }, [
-                    "Lock a variable to a constant (example: balloon → set ",
-                    makeEl("span", { class:"chip" }, ["P = 1 atm"]),
-                    " so you don’t re-type it). Locked fields disable automatically."
-                  ]),
-                  makeEl("div", { class:"lockGrid" }, [
-                    makeEl("div", {}, [
-                      makeEl("div", { class:"miniLab" }, ["Variable to lock"]),
-                      makeEl("select", { id:`${f.id}__lockVar` }, [
-                        ...lockableVars.map(v => {
-                          const opt = document.createElement("option");
-                          opt.value = v.key;
-                          opt.textContent = `${v.key} • ${v.label}`;
-                          return opt;
-                        })
-                      ])
-                    ]),
-                    makeEl("div", {}, [
-                      makeEl("div", { class:"miniLab" }, ["Constant value (with units)"]),
-                      makeEl("input", {
-                        id:`${f.id}__lockVal`,
-                        type:"text",
-                        inputmode:"decimal",
-                        placeholder:"e.g., 1 atm or 101.3 kPa or 25 C",
-                        value:""
-                      })
-                    ]),
-                    makeEl("div", {}, [
-                      makeEl("div", { class:"miniLab", style:"visibility:hidden" }, ["x"]),
-                      makeEl("button", {
-                        type:"button",
-                        class:"primary",
-                        onclick: ()=> {
-                          const varSel = document.getElementById(`${f.id}__lockVar`);
-                          const valIn = document.getElementById(`${f.id}__lockVal`);
-                          const vk = varSel?.value || "";
-                          const vv = valIn?.value || "";
-                          if(!vk || !vv.trim()){ toast("Pick a variable and enter a value."); return; }
-                          setLock(f.id, f, vk, vv);
-                          if(valIn) valIn.value = "";
-                          toast("Locked.");
-                        }
-                      }, ["Lock"])
-                    ])
-                  ]),
-                  (cs.locks && cs.locks.length)
-                    ? makeEl("div", { class:"helper" }, [
-                        "Current locks: ",
-                        ...cs.locks.map(L => makeEl("span", { class:"chip" }, [`${L.varKey} = ${L.valRaw}`])),
-                        makeEl("div", { style:"margin-top:10px" }, [
-                          makeEl("button", { type:"button", class:"mini", onclick: ()=>{ clearLocks(f.id); toast("Locks cleared."); } }, ["Clear locks"])
-                        ])
-                      ])
-                    : makeEl("div", { class:"helper" }, ["No locks yet."])
-                ])
-              ]),
-
-              // Examples helper
-              makeEl("div", { class:"helper" }, [
-                "Examples: ",
-                makeEl("span", { class:"chip" }, ["101.3 kPa"]),
-                makeEl("span", { class:"chip" }, ["760 mmHg"]),
-                makeEl("span", { class:"chip" }, ["250 mL"]),
-                makeEl("span", { class:"chip" }, ["25 C"]),
-                makeEl("span", { class:"chip" }, ["0.500 mol"]),
-                makeEl("div", { style:"margin-top:8px" }, [
-                  "Tip: For gas law temperature, enter ",
-                  makeEl("span", { class:"chip" }, ["K"]),
-                  " or type Celsius and click ",
-                  makeEl("span", { class:"chip" }, ["C → K"]),
-                  "."
-                ])
-              ])
-            ]),
-
-            // Output
-            makeEl("div", { class:"output" }, [
-              makeEl("div", { class:"big" }, [
-                makeEl("div", { class:"lhs" }, [
-                  makeEl("div", { class:"k" }, [`Solving for ${targetVar?.label || target}`]),
-                  makeEl("div", { class:"v" }, [
-                    result.ok
-                      ? `${sigFormat(result.value, state.sig)} ${result.unit}${result.extra || ""}`.trim()
-                      : "—"
-                  ])
-                ]),
-                makeEl("button", {
-                  type:"button",
-                  class:"primary",
-                  onclick: async ()=> {
-                    const txt = result.ok
-                      ? `${targetVar?.label || target}: ${sigFormat(result.value, state.sig)} ${result.unit}${result.extra || ""}`.trim()
-                      : "No result to copy.";
-                    await safeCopy(txt);
-                    toast("Copied.");
-                  }
-                }, ["Copy"])
-              ]),
-
-              makeEl("div", { class:`status ${result.ok ? (result.status||"good") : (result.status||"bad")}` }, [
-                result.ok
-                  ? (result.notes?.length
-                      ? `OK. ${result.notes.join(" • ")}`
-                      : "OK. Enter/adjust values to update instantly.")
-                  : (result.msg || "Check your inputs.")
-              ]),
-
-              makeEl("div", { class:"eq" }, [
-                makeEl("div", { class:"pretty" }, [
-                  result.ok ? result.pretty : "Rearrangement will appear here once inputs are valid."
-                ]),
-                makeEl("button", {
-                  type:"button",
-                  onclick: async ()=> {
-                    const txt = result.ok ? result.pretty : "";
-                    if(!txt){ toast("Nothing to copy."); return; }
-                    await safeCopy(txt);
-                    toast("Copied formula.");
-                  }
-                }, ["Copy"])
-              ]),
-
-              makeEl("details", {}, [
-                makeEl("summary", {}, [
-                  makeEl("span", {}, ["All rearrangements"]),
-                  makeEl("span", { style:"color:rgba(234,241,255,.75); font-family:var(--mono); font-size:11px" }, [
-                    `${f.forms.length} forms`
-                  ])
-                ]),
-                makeEl("div", { class:"inside" }, [
-                  makeEl("div", { class:"forms" }, f.forms.map(frm => {
-                    return makeEl("div", { class:"eq" }, [
-                      makeEl("div", { class:"pretty" }, [frm.pretty]),
-                      makeEl("button", { type:"button", onclick: async ()=>{ await safeCopy(frm.pretty); toast("Copied."); } }, ["Copy"])
-                    ]);
-                  }))
-                ])
-              ])
-            ])
-          ])
-        ]);
-
-        cardsEl.appendChild(card);
-      }
     }
 
-    /**********************
-     * Events
-     **********************/
-    searchInput.addEventListener("input", ()=> renderPreserveFocus());
-    sigSelect.addEventListener("change", ()=>{
-      state.sig = Number(sigSelect.value);
-      renderPreserveFocus();
+    function filterFormulas(q){
+      const s = (q ?? "").toString().trim().toLowerCase();
+      if(!s) return formulas;
+      return formulas.filter(f=>{
+        const hay = `${f.title} ${f.tag} ${f.desc}`.toLowerCase();
+        return hay.includes(s);
+      });
+    }
+
+    // Search + global controls
+    $search.addEventListener("input", ()=>{
+      render(filterFormulas($search.value));
     });
-    resetAllBtn.addEventListener("click", ()=>{
-      state.perCard = {};
-      state.perCardInputs = {};
-      renderPreserveFocus();
-      toast("Reset.");
+
+    $sig.addEventListener("change", ()=>{
+      // Recompute all cards quietly with new sig figs
+      document.querySelectorAll(".card").forEach(card=> compute(card, true));
+    });
+
+    $reset.addEventListener("click", ()=>{
+      // reset search
+      $search.value = "";
+      render(formulas);
+      // clear all
+      document.querySelectorAll(".card").forEach(card=> clearCard(card));
     });
 
     // Initial render
-    render();
+    render(formulas);
   </script>
 </body>
 </html>
