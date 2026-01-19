@@ -1,0 +1,988 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ChemCheatcode • Thermo</title>
+  <meta name="color-scheme" content="dark light" />
+  <style>
+    :root{
+      --bg: #0b1020;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.08);
+      --stroke: rgba(255,255,255,.14);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --muted2: rgba(255,255,255,.55);
+      --accent: #4da3ff;
+      --accent2:#66ffc7;
+      --danger:#ff6b6b;
+      --ok:#74f28a;
+      --shadow: 0 24px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+      --radius2: 14px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{box-sizing:border-box}
+    html, body{height:100%}
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(77,163,255,.18), transparent 60%),
+        radial-gradient(900px 700px at 85% 30%, rgba(102,255,199,.12), transparent 55%),
+        radial-gradient(1000px 800px at 55% 95%, rgba(160,120,255,.10), transparent 60%),
+        linear-gradient(180deg, #070a14 0%, #0b1020 50%, #060912 100%);
+      display:flex;
+      align-items:stretch;
+    }
+
+    .wrap{
+      width:min(1300px, 100%);
+      margin: 0 auto;
+      padding: 22px 18px 40px;
+    }
+
+    /* ===== Top Navigation ===== */
+    .topNav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 12px 12px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      margin-bottom: 14px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      min-width: 220px;
+    }
+    .logo{
+      width:34px;height:34px;border-radius:12px;
+      background: linear-gradient(135deg, rgba(77,163,255,.95), rgba(102,255,199,.55));
+      box-shadow: 0 0 0 5px rgba(77,163,255,.10);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .brandText{display:flex; flex-direction:column; gap:2px; line-height:1.1;}
+    .brandText b{font-size:13px; letter-spacing:.2px;}
+    .brandText span{font-size:12px; color: var(--muted2);}
+
+    .tabs{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;}
+    .tab{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-weight:700;
+      letter-spacing:.2px;
+      transition: border-color .15s ease, background .15s ease, transform .05s ease;
+      user-select:none;
+      text-decoration:none;
+    }
+    .tab:hover{border-color: rgba(77,163,255,.55); background: rgba(77,163,255,.10);}
+    .tab:active{ transform: translateY(1px); }
+    .tab.active{
+      border-color: rgba(77,163,255,.65);
+      color: rgba(255,255,255,.92);
+      background: linear-gradient(135deg, rgba(77,163,255,.25), rgba(102,255,199,.14));
+    }
+    .tabDot{
+      width:10px;height:10px;border-radius:50%;
+      background: rgba(255,255,255,.25);
+      box-shadow: 0 0 0 4px rgba(255,255,255,.06);
+    }
+    .tab.active .tabDot{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 5px rgba(77,163,255,.10);
+    }
+    @media (max-width: 720px){
+      .topNav{flex-direction:column; align-items:stretch;}
+      .tabs{justify-content:flex-start;}
+    }
+
+    /* ===== Layout ===== */
+    .layout{
+      display:grid;
+      grid-template-columns: 320px 1fr;
+      gap: 16px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .layout{grid-template-columns: 1fr;}
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.08) 0%, rgba(255,255,255,.05) 100%);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+
+    .cardHead{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 10px;
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    .cardHead h2{
+      margin:0;
+      font-size: 15px;
+      letter-spacing:.2px;
+      color: rgba(255,255,255,.88);
+    }
+    .cardHead .sub{
+      margin-top:6px;
+      font-size:12px;
+      color: var(--muted2);
+      line-height:1.35;
+    }
+    .cardBody{padding: 14px 16px 16px;}
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.18);
+      font-size: 12px;
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .badge.ok{ border-color: rgba(116,242,138,.35); color: rgba(116,242,138,.92); }
+    .badge.bad{ border-color: rgba(255,107,107,.35); color: rgba(255,107,107,.92); }
+    .badge.warn{ border-color: rgba(255,210,130,.35); color: rgba(255,210,130,.95); }
+
+    .toolSearch{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      outline:none;
+      font-family: var(--mono);
+      transition: border-color .15s ease, box-shadow .15s ease;
+      margin-bottom: 10px;
+    }
+    .toolSearch:focus{
+      border-color: rgba(77,163,255,.65);
+      box-shadow: 0 0 0 4px rgba(77,163,255,.18);
+    }
+
+    .toolBtn{
+      width:100%;
+      text-align:left;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 10px 12px;
+      cursor:pointer;
+      transition: border-color .15s ease, background .15s ease, transform .05s ease;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      margin-bottom: 8px;
+    }
+    .toolBtn:hover{
+      border-color: rgba(77,163,255,.55);
+      background: rgba(77,163,255,.10);
+    }
+    .toolBtn:active{ transform: translateY(1px); }
+    .toolBtn.active{
+      border-color: rgba(77,163,255,.65);
+      background: linear-gradient(135deg, rgba(77,163,255,.22), rgba(102,255,199,.12));
+    }
+    .toolBtn .k{font-weight:800; font-size:12px; letter-spacing:.2px;}
+    .toolBtn .d{font-size:12px; color: var(--muted2); margin-top:4px; line-height:1.3;}
+    .miniDot{
+      width:10px;height:10px;border-radius:50%;
+      background: rgba(255,255,255,.25);
+      box-shadow: 0 0 0 4px rgba(255,255,255,.06);
+      margin-top: 3px;
+      flex: 0 0 auto;
+    }
+    .toolBtn.active .miniDot{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 5px rgba(77,163,255,.10);
+    }
+
+    .grid2{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 16px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .grid2{grid-template-columns: 1fr;}
+    }
+
+    .row2{display:grid; grid-template-columns: 1fr 1fr; gap: 12px;}
+    @media (max-width: 720px){
+      .row2{grid-template-columns: 1fr;}
+    }
+
+    .row3{display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;}
+    @media (max-width: 980px){
+      .row3{grid-template-columns: 1fr;}
+    }
+
+    label{
+      display:block;
+      font-size: 12px;
+      color: var(--muted2);
+      margin: 0 0 6px;
+      letter-spacing:.2px;
+    }
+    input[type="text"], select{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      outline: none;
+      transition: border-color .15s ease, box-shadow .15s ease, transform .05s ease;
+      font-family: var(--mono);
+      letter-spacing:.1px;
+    }
+    input[type="text"]:focus, select:focus{
+      border-color: rgba(77,163,255,.65);
+      box-shadow: 0 0 0 4px rgba(77,163,255,.18);
+    }
+    select{
+      appearance:none;
+      background-image:
+        linear-gradient(45deg, transparent 50%, rgba(255,255,255,.65) 50%),
+        linear-gradient(135deg, rgba(255,255,255,.65) 50%, transparent 50%),
+        linear-gradient(to right, rgba(255,255,255,.0), rgba(255,255,255,.0));
+      background-position:
+        calc(100% - 18px) calc(50% - 3px),
+        calc(100% - 12px) calc(50% - 3px),
+        0 0;
+      background-size: 6px 6px, 6px 6px, 100% 100%;
+      background-repeat:no-repeat;
+      padding-right: 36px;
+      font-family: var(--sans);
+    }
+
+    .btn{
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.20);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 10px 12px;
+      cursor:pointer;
+      transition: transform .06s ease, border-color .15s ease, background .15s ease;
+      user-select:none;
+      font-weight: 700;
+      letter-spacing:.2px;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+    }
+    .btn:hover{
+      border-color: rgba(77,163,255,.55);
+      background: rgba(77,163,255,.10);
+    }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{
+      border-color: rgba(77,163,255,.65);
+      background: linear-gradient(135deg, rgba(77,163,255,.25), rgba(102,255,199,.18));
+    }
+    .btn.danger{
+      border-color: rgba(255,107,107,.55);
+      background: linear-gradient(135deg, rgba(255,107,107,.20), rgba(255,107,107,.10));
+    }
+
+    .resultBox{
+      display:grid;
+      gap: 10px;
+      margin-top: 12px;
+      padding: 12px;
+      background: rgba(0,0,0,.18);
+      border: 1px dashed rgba(255,255,255,.18);
+      border-radius: 16px;
+    }
+    .big{
+      font-family: var(--mono);
+      font-size: clamp(18px, 2.8vw, 26px);
+      line-height:1.1;
+      letter-spacing: .3px;
+      word-break: break-word;
+    }
+    .steps{
+      margin:0;
+      white-space: pre-wrap;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(255,255,255,.86);
+      line-height: 1.5;
+    }
+    .footerNote{
+      margin-top: 12px;
+      color: var(--muted2);
+      font-size: 12px;
+      line-height:1.35;
+    }
+
+    .kbd{
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.18);
+      color: rgba(255,255,255,.86);
+      white-space: nowrap;
+    }
+
+    .pillRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top: 10px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.86);
+      font-weight:800;
+      font-size:12px;
+      letter-spacing:.2px;
+    }
+    .pill.ok{ border-color: rgba(116,242,138,.35); color: rgba(116,242,138,.92); }
+    .pill.bad{ border-color: rgba(255,107,107,.35); color: rgba(255,107,107,.92); }
+    .pill.warn{ border-color: rgba(255,210,130,.35); color: rgba(255,210,130,.95); }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div class="topNav" role="navigation" aria-label="ChemCheatcode navigation">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="brandText">
+          <b>ChemCheatcode</b>
+          <span>Thermodynamics Tools</span>
+        </div>
+      </div>
+
+      <div class="tabs" aria-label="Pages">
+        <a class="tab" href="index.html">
+          <span class="tabDot" aria-hidden="true"></span>
+          <span>Converters</span>
+        </a>
+        <a class="tab" href="algebra.html?v=1">
+          <span class="tabDot" aria-hidden="true"></span>
+          <span>Formula Solver</span>
+        </a>
+        <a class="tab active" href="thermo.html?v=1">
+          <span class="tabDot" aria-hidden="true"></span>
+          <span>Thermo</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="layout">
+      <!-- Sidebar -->
+      <aside class="card" aria-label="Tools">
+        <div class="cardHead">
+          <div>
+            <h2>Thermo Tools</h2>
+            <div class="sub">Gibbs spontaneity + Reaction Quotient (Q).</div>
+          </div>
+          <span class="badge" id="statusBadge">Ready</span>
+        </div>
+
+        <div class="cardBody">
+          <input id="toolSearch" class="toolSearch" type="text" placeholder="Search tools..." aria-label="Search tools" />
+
+          <button class="toolBtn active" data-tool="gibbs" type="button">
+            <span class="miniDot" aria-hidden="true"></span>
+            <div>
+              <div class="k">Gibbs Free Energy Checker</div>
+              <div class="d">Spontaneous vs non-spontaneous vs equilibrium + exergonic/endergonic.</div>
+            </div>
+          </button>
+
+          <button class="toolBtn" data-tool="quotient" type="button">
+            <span class="miniDot" aria-hidden="true"></span>
+            <div>
+              <div class="k">Reaction Quotient (Q)</div>
+              <div class="d">Compute Q from stoichiometric exponents (products/reactants).</div>
+            </div>
+          </button>
+
+          <div class="footerNote">
+            <b>Quick tips:</b>
+            For ΔG, you can type values like <span class="kbd">-12.5</span> and choose units.
+            For Q, enter each species’ value (activity/concentration/partial pressure) and exponent.
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main -->
+      <main class="grid2">
+        <section class="card" aria-label="Inputs">
+          <div class="cardHead">
+            <div>
+              <h2 id="toolTitle">Gibbs Free Energy Checker</h2>
+              <div class="sub" id="toolSub">Enter ΔG to classify spontaneity + energy direction.</div>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn danger" id="btnReset" type="button">Reset</button>
+              <button class="btn primary" id="btnSolve" type="button">Solve</button>
+            </div>
+          </div>
+          <div class="cardBody" id="inputsArea"></div>
+        </section>
+
+        <section class="card" aria-label="Output">
+          <div class="cardHead">
+            <div>
+              <h2>Answer + Steps</h2>
+              <div class="sub">Clear classification + formula used.</div>
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn" id="btnDemo" type="button">Demo</button>
+              <button class="btn" id="btnCopy" type="button">Copy</button>
+            </div>
+          </div>
+          <div class="cardBody">
+            <div class="resultBox" role="region" aria-label="Result">
+              <div class="big" id="ansBig">—</div>
+              <div class="footerNote" id="ansNote">Pick a tool and solve.</div>
+              <div class="pillRow" id="pillRow" aria-label="Classifications"></div>
+              <pre class="steps" id="stepsOut">Select a tool, enter values, then hit Solve.</pre>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    /***********************
+     * Helpers
+     ***********************/
+    const $ = (s)=>document.querySelector(s);
+    const $$ = (s)=>Array.from(document.querySelectorAll(s));
+
+    function formatSig(x, sig){
+      if (!isFinite(x)) return "NaN";
+      if (x === 0) return "0";
+      const abs = Math.abs(x);
+      const exp = Math.floor(Math.log10(abs));
+      const decimals = Math.max(0, sig - 1 - exp);
+      if (abs >= 1e6 || abs < 1e-3){
+        return x.toExponential(sig-1).replace("+","").replace("e","E");
+      }
+      return x.toFixed(decimals).replace(/\.?0+$/,"");
+    }
+
+    function setBadge(kind, text){
+      const el = $("#statusBadge");
+      el.className = "badge" + (kind ? " " + kind : "");
+      el.textContent = text;
+    }
+
+    function clearPills(){
+      const row = $("#pillRow");
+      row.innerHTML = "";
+    }
+
+    function addPill(kind, text){
+      const row = $("#pillRow");
+      const pill = document.createElement("div");
+      pill.className = "pill" + (kind ? " " + kind : "");
+      pill.textContent = text;
+      row.appendChild(pill);
+    }
+
+    function n(v){
+      const s = String(v ?? "").trim();
+      if (!s) return NaN;
+      const x = Number(s);
+      return Number.isFinite(x) ? x : NaN;
+    }
+
+    function clampInt(x, min, max){
+      x = Math.round(Number(x));
+      if (!Number.isFinite(x)) return min;
+      return Math.max(min, Math.min(max, x));
+    }
+
+    /***********************
+     * Tool definitions
+     ***********************/
+    const TOOLS = {
+      gibbs: {
+        title: "Gibbs Free Energy Checker",
+        sub: "Enter ΔG to classify: spontaneous / non-spontaneous / equilibrium + exergonic / endergonic.",
+        buildUI(){
+          const wrap = document.createElement("div");
+          wrap.innerHTML = `
+            <div class="row3">
+              <div>
+                <label for="dgVal">ΔG value</label>
+                <input id="dgVal" type="text" placeholder="e.g., -12.5" />
+                <div class="footerNote" style="margin-top:6px">Sign matters. Negative means product-favored (under stated conditions).</div>
+              </div>
+
+              <div>
+                <label for="dgUnit">ΔG units</label>
+                <select id="dgUnit">
+                  <option value="J">J</option>
+                  <option value="kJ" selected>kJ</option>
+                </select>
+                <div class="footerNote" style="margin-top:6px">Output keeps your chosen unit.</div>
+              </div>
+
+              <div>
+                <label for="sigPick">Sig figs</label>
+                <select id="sigPick">
+                  <option value="2">2</option>
+                  <option value="3" selected>3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
+                <div class="footerNote" style="margin-top:6px">Used for displaying ΔG.</div>
+              </div>
+            </div>
+
+            <div class="footerNote">
+              Rules used: ΔG &lt; 0 spontaneous + exergonic; ΔG &gt; 0 non-spontaneous + endergonic; ΔG = 0 at equilibrium.
+            </div>
+          `;
+          return wrap;
+        },
+        getState(){
+          return {
+            dg: n($("#dgVal")?.value),
+            unit: $("#dgUnit")?.value || "kJ",
+            sig: clampInt($("#sigPick")?.value || 3, 2, 6)
+          };
+        },
+        solve(st){
+          clearPills();
+
+          if (!Number.isFinite(st.dg)){
+            setBadge("bad", "Enter ΔG");
+            $("#ansBig").textContent = "—";
+            $("#ansNote").textContent = "Could not parse ΔG. Type a number like -12.5.";
+            $("#stepsOut").textContent = "Example inputs:\n  ΔG = -12.5 kJ\n  ΔG = 2.10 kJ\n  ΔG = 0";
+            return;
+          }
+
+          // Treat "close to zero" as equilibrium if extremely small compared to chosen unit.
+          // (You can adjust this tolerance later.)
+          const tol = (st.unit === "J") ? 1e-9 : 1e-12;
+          const dg = st.dg;
+
+          let spontaneity = "";
+          let energyWord = "";
+          let kind1 = "warn";
+          let kind2 = "warn";
+
+          if (Math.abs(dg) <= tol){
+            spontaneity = "At equilibrium";
+            energyWord = "Neither exergonic nor endergonic";
+            kind1 = "warn";
+            kind2 = "warn";
+            addPill("warn", "ΔG = 0 → equilibrium");
+            addPill("warn", "No net driving force");
+          } else if (dg < 0){
+            spontaneity = "Spontaneous";
+            energyWord = "Exergonic";
+            kind1 = "ok";
+            kind2 = "ok";
+            addPill("ok", "ΔG < 0 → spontaneous");
+            addPill("ok", "Exergonic");
+          } else {
+            spontaneity = "Non-spontaneous";
+            energyWord = "Endergonic";
+            kind1 = "bad";
+            kind2 = "bad";
+            addPill("bad", "ΔG > 0 → non-spontaneous");
+            addPill("bad", "Endergonic");
+          }
+
+          const dgStr = formatSig(dg, st.sig);
+          $("#ansBig").textContent = `${spontaneity} • ${energyWord}`;
+          $("#ansNote").textContent = `Based on ΔG = ${dgStr} ${st.unit}`;
+          setBadge(kind1, "Solved");
+
+          const steps = [];
+          steps.push("Thermo: Gibbs Free Energy classification");
+          steps.push("");
+          steps.push(`Given: ΔG = ${dgStr} ${st.unit}`);
+          steps.push("");
+          steps.push("Decision rules:");
+          steps.push("  If ΔG < 0 → spontaneous (exergonic)");
+          steps.push("  If ΔG > 0 → non-spontaneous (endergonic)");
+          steps.push("  If ΔG = 0 → equilibrium");
+          steps.push("");
+          steps.push(`Result: ${spontaneity}`);
+          steps.push(`Energy direction: ${energyWord}`);
+          $("#stepsOut").textContent = steps.join("\n");
+        },
+        demo(){
+          $("#dgVal").value = "-18.7";
+          $("#dgUnit").value = "kJ";
+          $("#sigPick").value = "3";
+        },
+        reset(){
+          $("#dgVal").value = "";
+          $("#dgUnit").value = "kJ";
+          $("#sigPick").value = "3";
+        }
+      },
+
+      quotient: {
+        title: "Reaction Quotient (Q)",
+        sub: "Compute Q using product and reactant terms with exponents (stoichiometric coefficients).",
+        buildUI(){
+          const wrap = document.createElement("div");
+          wrap.innerHTML = `
+            <div class="row3">
+              <div>
+                <label for="sigPickQ">Sig figs</label>
+                <select id="sigPickQ">
+                  <option value="2">2</option>
+                  <option value="3" selected>3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
+                <div class="footerNote" style="margin-top:6px">Q is dimensionless; this just formats the display.</div>
+              </div>
+
+              <div>
+                <label for="qMode">Interpret values as</label>
+                <select id="qMode">
+                  <option value="generic" selected>Generic (activities)</option>
+                  <option value="conc">Concentrations [ ]</option>
+                  <option value="press">Partial pressures (P)</option>
+                </select>
+                <div class="footerNote" style="margin-top:6px">This affects how steps are labeled only.</div>
+              </div>
+
+              <div>
+                <label for="qNote">Optional label</label>
+                <input id="qNote" type="text" placeholder="e.g., For: N2 + 3H2 ⇌ 2NH3" />
+                <div class="footerNote" style="margin-top:6px">Pure solids/liquids are typically omitted.</div>
+              </div>
+            </div>
+
+            <div class="footerNote" style="margin-top:8px">
+              Reaction quotient definition:
+              <span class="kbd">Q = (Π products value^coeff) / (Π reactants value^coeff)</span>
+            </div>
+
+            <div style="margin-top:14px">
+              <div class="footerNote" style="margin-bottom:8px"><b>Products</b> (numerator)</div>
+              ${termRowHTML("P", 1)}
+              ${termRowHTML("P", 2)}
+              ${termRowHTML("P", 3)}
+              <div class="footerNote" style="margin-top:10px; margin-bottom:8px"><b>Reactants</b> (denominator)</div>
+              ${termRowHTML("R", 1)}
+              ${termRowHTML("R", 2)}
+              ${termRowHTML("R", 3)}
+            </div>
+
+            <div class="footerNote" style="margin-top:12px">
+              Leave unused rows blank. Exponent = stoichiometric coefficient in the balanced equation.
+            </div>
+          `;
+          return wrap;
+        },
+        getState(){
+          const sig = clampInt($("#sigPickQ")?.value || 3, 2, 6);
+          const mode = $("#qMode")?.value || "generic";
+          const note = String($("#qNote")?.value || "").trim();
+
+          const products = readTerms("P");
+          const reactants = readTerms("R");
+          return {sig, mode, note, products, reactants};
+        },
+        solve(st){
+          clearPills();
+
+          if (st.products.length === 0 || st.reactants.length === 0){
+            setBadge("bad", "Add terms");
+            $("#ansBig").textContent = "—";
+            $("#ansNote").textContent = "You need at least 1 product and 1 reactant term (with values).";
+            $("#stepsOut").textContent =
+              "Example:\nProducts: NH3 value=0.120 exponent=2\nReactants: N2 value=0.500 exponent=1 ; H2 value=0.200 exponent=3";
+            return;
+          }
+
+          const num = st.products.reduce((acc,t)=> acc * Math.pow(t.value, t.exp), 1);
+          const den = st.reactants.reduce((acc,t)=> acc * Math.pow(t.value, t.exp), 1);
+
+          if (!isFinite(num) || !isFinite(den) || den === 0){
+            setBadge("bad", "Bad input");
+            $("#ansBig").textContent = "—";
+            $("#ansNote").textContent = "Check for non-numeric values or zero denominator.";
+            $("#stepsOut").textContent = "All values must be positive numbers. Denominator cannot be 0.";
+            return;
+          }
+
+          const Q = num / den;
+          const qStr = formatSig(Q, st.sig);
+
+          $("#ansBig").textContent = `Q = ${qStr}`;
+          $("#ansNote").textContent = st.note ? st.note : "Reaction quotient computed from inputs.";
+          setBadge("ok", "Solved");
+
+          addPill("ok", "Q computed");
+          addPill("warn", "Compare to K later");
+
+          const labelFor = (name)=>{
+            if (st.mode === "conc") return `[${name}]`;
+            if (st.mode === "press") return `P(${name})`;
+            return `${name}`;
+          };
+
+          const steps = [];
+          steps.push("Thermo: Reaction Quotient (Q)");
+          if (st.note) steps.push(`Label: ${st.note}`);
+          steps.push("");
+          steps.push("Formula:");
+          steps.push("  Q = (Π products value^coeff) / (Π reactants value^coeff)");
+          steps.push("");
+          steps.push("Products (numerator):");
+          st.products.forEach(t=>{
+            steps.push(`  ${labelFor(t.name)}^${t.exp}  with value = ${t.value}`);
+          });
+          steps.push(`  Numerator = ${formatSig(num, Math.max(6, st.sig))}`);
+          steps.push("");
+          steps.push("Reactants (denominator):");
+          st.reactants.forEach(t=>{
+            steps.push(`  ${labelFor(t.name)}^${t.exp}  with value = ${t.value}`);
+          });
+          steps.push(`  Denominator = ${formatSig(den, Math.max(6, st.sig))}`);
+          steps.push("");
+          steps.push(`Q = Numerator / Denominator = ${qStr}`);
+          steps.push("");
+          steps.push("Note: Q is built like K, but uses *current* values (not necessarily at equilibrium).");
+          $("#stepsOut").textContent = steps.join("\n");
+        },
+        demo(){
+          $("#sigPickQ").value = "3";
+          $("#qMode").value = "conc";
+          $("#qNote").value = "Example: N2 + 3H2 ⇌ 2NH3";
+          // Products: NH3, exp 2, val 0.120
+          $("#P_name1").value = "NH3";
+          $("#P_val1").value = "0.120";
+          $("#P_exp1").value = "2";
+          // Reactants: N2, exp 1, val 0.500 ; H2 exp 3 val 0.200
+          $("#R_name1").value = "N2";
+          $("#R_val1").value = "0.500";
+          $("#R_exp1").value = "1";
+
+          $("#R_name2").value = "H2";
+          $("#R_val2").value = "0.200";
+          $("#R_exp2").value = "3";
+        },
+        reset(){
+          $("#sigPickQ").value = "3";
+          $("#qMode").value = "generic";
+          $("#qNote").value = "";
+          // Clear all term rows
+          ["P","R"].forEach(side=>{
+            for (let i=1;i<=3;i++){
+              $(`#${side}_name${i}`).value = "";
+              $(`#${side}_val${i}`).value = "";
+              $(`#${side}_exp${i}`).value = "1";
+            }
+          });
+        }
+      }
+    };
+
+    function termRowHTML(side, i){
+      return `
+        <div class="row3" style="margin-top:10px">
+          <div>
+            <label for="${side}_name${i}">Species</label>
+            <input id="${side}_name${i}" type="text" placeholder="e.g., NH3" />
+          </div>
+          <div>
+            <label for="${side}_val${i}">Value</label>
+            <input id="${side}_val${i}" type="text" placeholder="e.g., 0.120" />
+          </div>
+          <div>
+            <label for="${side}_exp${i}">Exponent</label>
+            <select id="${side}_exp${i}">
+              <option value="1" selected>1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+            </select>
+          </div>
+        </div>
+      `;
+    }
+
+    function readTerms(side){
+      const out = [];
+      for (let i=1;i<=3;i++){
+        const name = String($(`#${side}_name${i}`)?.value || "").trim();
+        const val = n($(`#${side}_val${i}`)?.value);
+        const exp = clampInt($(`#${side}_exp${i}`)?.value || 1, 1, 99);
+
+        // If all blank, ignore row. If partially filled, we'll validate by requiring value and name.
+        if (!name && !String($(`#${side}_val${i}`)?.value || "").trim()) continue;
+
+        if (!name || !Number.isFinite(val) || val <= 0){
+          // Mark invalid row by pushing a NaN and letting solver catch it
+          out.push({name: name || "(missing)", value: NaN, exp});
+          continue;
+        }
+        out.push({name, value: val, exp});
+      }
+      return out;
+    }
+
+    /***********************
+     * App state + rendering
+     ***********************/
+    const state = { tool: "gibbs" };
+
+    const inputsArea = $("#inputsArea");
+
+    function render(){
+      // Update header
+      $("#toolTitle").textContent = TOOLS[state.tool].title;
+      $("#toolSub").textContent = TOOLS[state.tool].sub;
+
+      // Build inputs
+      inputsArea.innerHTML = "";
+      inputsArea.appendChild(TOOLS[state.tool].buildUI());
+
+      // Search filter
+      $("#toolSearch").addEventListener("input", (e)=>{
+        const q = String(e.target.value||"").toLowerCase().trim();
+        $$(".toolBtn").forEach(b=>{
+          const text=(b.innerText||"").toLowerCase();
+          b.style.display = (!q || text.includes(q)) ? "" : "none";
+        });
+      });
+    }
+
+    function clearAnswer(){
+      $("#ansBig").textContent = "—";
+      $("#ansNote").textContent = "Pick a tool and solve.";
+      $("#stepsOut").textContent = "Select a tool, enter values, then hit Solve.";
+      clearPills();
+      setBadge("", "Ready");
+    }
+
+    function validateNoNaNTerms(st){
+      const badP = st.products?.some(t=>!Number.isFinite(t.value));
+      const badR = st.reactants?.some(t=>!Number.isFinite(t.value));
+      return !(badP || badR);
+    }
+
+    function solve(){
+      const tool = TOOLS[state.tool];
+      const st = tool.getState();
+
+      // Extra validation for Q terms (so the error is cleaner)
+      if (state.tool === "quotient" && !validateNoNaNTerms(st)){
+        setBadge("bad", "Fix inputs");
+        $("#ansBig").textContent = "—";
+        $("#ansNote").textContent = "One or more rows are incomplete/invalid.";
+        $("#stepsOut").textContent =
+          "For each row you use, you must provide:\n  • Species name (e.g., NH3)\n  • A positive numeric value\n  • An exponent (usually the coefficient)\n\nLeave unused rows fully blank.";
+        clearPills();
+        addPill("bad", "Invalid row detected");
+        return;
+      }
+
+      tool.solve(st);
+    }
+
+    /***********************
+     * Buttons
+     ***********************/
+    $("#btnSolve").addEventListener("click", solve);
+
+    $("#btnReset").addEventListener("click", ()=>{
+      render();
+      clearAnswer();
+      // After render, reset the current tool's UI fields (they exist now)
+      TOOLS[state.tool].reset?.();
+      setBadge("", "Ready");
+    });
+
+    $("#btnCopy").addEventListener("click", async ()=>{
+      const txt = `${$("#ansBig").textContent}\n${$("#ansNote").textContent}\n\n${$("#stepsOut").textContent}`.trim();
+      if (!txt || txt.startsWith("—")) return;
+      try{
+        await navigator.clipboard.writeText(txt);
+        setBadge("ok", "Copied!");
+        setTimeout(()=>setBadge("", "Ready"), 900);
+      }catch{
+        setBadge("bad", "Copy failed");
+      }
+    });
+
+    $("#btnDemo").addEventListener("click", ()=>{
+      render();
+      clearAnswer();
+      TOOLS[state.tool].demo?.();
+      solve();
+    });
+
+    /***********************
+     * Sidebar switching
+     ***********************/
+    $$(".toolBtn").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const t = btn.getAttribute("data-tool");
+        if (!TOOLS[t]) return;
+        state.tool = t;
+
+        $$(".toolBtn").forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+
+        render();
+        clearAnswer();
+      });
+    });
+
+    // Init
+    render();
+    clearAnswer();
+  </script>
+</body>
+</html>
